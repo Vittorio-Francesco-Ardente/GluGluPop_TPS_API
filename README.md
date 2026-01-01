@@ -52,10 +52,16 @@ Benvenuto nel branch Team! Qui trovi come ci siamo organizzati per il progetto.
 - Crea i design UI/UX e i prototipi dell'interfaccia
 - Testa funzionalità e usabilità
 - Fa commit dei test e dei design su GitHub
-- Documenta i test eseguiti
+- Documenta i test eseguiti  
 
+
+| Nome | Ruolo | Responsabilità principali | Area |
+|-|-|-|-|
+| **Niccolò Decano** | Project Manager / Backend | Coordinamento tecnico, sviluppo backend | Backend & Coordinamento |
+| **Previtali Mattia** | Frontend Developer | Sviluppo interfaccia React e componenti UI | Frontend |
+| **Gamba Alessandro** | API & Data Specialist | Integrazione e gestione API, normalizzazione dati | API & Dati |
+| **Vittorio Francesco Ardente** | UI/UX Designer & Tester | Design UI/UX, prototipazione, test funzionali e usabilità | Design & Testing |
 ---
-
 ## 📝 Come Lavoriamo Insieme
 
 **Cosa deve fare ognuno:**
