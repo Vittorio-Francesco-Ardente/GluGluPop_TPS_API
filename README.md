@@ -20,3 +20,8 @@ Design fluido, UX moderna, installabile come **PWA**.
 *Meno scroll, più match.*
 
 **GluGluPop — non scegliere cosa guardare. Scoprilo.**
+
+## Documentazione
+
+- [Development Guide](docs/DEVELOPMENT.md) - quick start, esempi e testing
+- [API Reference](docs/API.md) - Endpoint e utilizzo

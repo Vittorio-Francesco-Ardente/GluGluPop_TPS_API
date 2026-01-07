@@ -1,4 +1,5 @@
 # Quick Start
+> **Documentazione API completa**: vedi [API.md](API.md)  
 
 ## Prerequisiti
 - Node.js v16+
@@ -181,3 +182,4 @@ bash test_api.sh
 - L'app frontend (React) sarà deployata come PWA standalone
 - Questo backend serve le API per il swipe, le raccomandazioni e il login
 - Tutti gli endpoint protetti richiedono il token JWT nell'header `Authorization: Bearer <token>`
+- **Documentazione API completa**: vedi [API.md](API.md)

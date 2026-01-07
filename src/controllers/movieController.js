@@ -247,11 +247,12 @@ exports.searchMovies = async (req, res, next) => {
  */
 exports.getTrendingMovies = async (req, res, next) => {
   try {
-    const { timeWindow = 'week', withTrailer } = req.query; // 'day' o 'week'
+    const { timeWindow = 'week' } = req.query; // 'day' o 'week'
 
     const data = await tmdbRequest(`/trending/movie/${timeWindow}`);
 
-    let movies = data.results.map(movie => ({
+    //dati da mostrare
+    let moviesBase = data.results.map(movie => ({
       id: movie.id,
       title: movie.title,
       overview: movie.overview,
@@ -260,22 +261,19 @@ exports.getTrendingMovies = async (req, res, next) => {
       releaseDate: movie.release_date,
       voteAverage: movie.vote_average,
       genres: movie.genre_ids
-    }));
+    }));//trailer è aggiunto dopo perchè viene fetchato con un'altra query
 
-    const includeTrailer = withTrailer === 'true' || withTrailer === '1';
-    if (includeTrailer && Array.isArray(movies) && movies.length) {
-      const enriched = await Promise.all(
-        movies.map(async (m) => ({
-          ...m,
-          trailer: await getTrailerKey(m.id)
-        }))
-      );
-      movies = enriched;
-    }
+    // inserisci il codice del trailer in moviesBase
+    const movies = await Promise.all(
+      moviesBase.map(async (m) => ({
+        ...m,
+        trailer: await getTrailerKey(m.id)
+      }))
+    );
 
     res.status(200).json({
       success: true,
-      data: { movies }
+      data: { movies, moviesBase }//inserisce tutti i dati sui film + trailer nel array
     });
   } catch (error) {
     next(error);
