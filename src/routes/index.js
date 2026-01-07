@@ -6,12 +6,14 @@ const authRoutes = require('./auth.routes');
 const swipeRoutes = require('./swipe.routes');
 const groupRoutes = require('./group.routes');
 const recommendationRoutes = require('./recommendation.routes');
+const movieRoutes = require('./movie.routes');
 
 // Usa le routes
 router.use('/auth', authRoutes);
 router.use('/swipes', swipeRoutes);
 router.use('/groups', groupRoutes);
 router.use('/recommendations', recommendationRoutes);
+router.use('/movies', movieRoutes);
 
 // ============================================
 // HEALTH CHECK
@@ -63,6 +65,14 @@ router.get('/status', (req, res) => {
         'GET /api/recommendations/profile': 'Profilo raccomandazioni (🔒)',
         'GET /api/recommendations/similar': 'Film simili ai liked (🔒)',
         'GET /api/recommendations/genres': 'Generi consigliati (🔒)'
+      },
+      movies: {
+        'GET /api/movies/discover': 'Scopri film con filtri (🔒)',
+        'GET /api/movies/trending': 'Film popolari della settimana (🔒)',
+        'GET /api/movies/search?q=titolo': 'Cerca film per titolo (🔒)',
+        'GET /api/movies/genres': 'Lista generi disponibili (🔒)',
+        'GET /api/movies/:id': 'Dettagli completi film (🔒)',
+        'GET /api/movies/:id/similar': 'Film simili (🔒)'
       }
     },
     legend: '🔒 = Richiede token JWT'
