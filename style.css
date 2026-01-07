@@ -1,0 +1,205 @@
+* {
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --primary-yellow: #FFD000;
+            --primary-blue: #00B4D8;
+            --primary-dark-blue: #0077B6;
+        }
+        
+        /* Light Theme */
+        .light {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A2E;
+            --text-secondary: #6B7280;
+            --border-color: #E5E7EB;
+        }
+        
+        /* Dark Theme */
+        .dark {
+            --bg-primary: #0D0D0D;
+            --bg-secondary: #1A1A2E;
+            --bg-card: #16213E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #9CA3AF;
+            --border-color: #374151;
+        }
+        
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-yellow), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary-yellow), var(--primary-blue));
+        }
+        
+        .yellow-bg {
+            background: var(--primary-yellow);
+        }
+        
+        .blue-bg {
+            background: var(--primary-blue);
+        }
+        
+        .gradient-border {
+            border: 2px solid transparent;
+            background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+                        linear-gradient(135deg, var(--primary-yellow), var(--primary-blue)) border-box;
+        }
+        
+        .video-container {
+            aspect-ratio: 9/16;
+            max-height: calc(100vh - 140px);
+        }
+        
+        .action-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .action-btn:active {
+            transform: scale(0.9);
+        }
+        
+        .like-btn {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+        }
+        
+        .skip-btn {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+            color: white;
+        }
+        
+        .info-btn {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        .maybe-btn {
+            background: var(--primary-yellow);
+            color: #1A1A2E;
+        }
+        
+        .bottom-sheet {
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        
+        .bottom-sheet.open {
+            transform: translateY(0);
+        }
+        
+        .overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .card-swipe {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .card-swipe.swipe-left {
+            transform: translateX(-150%) rotate(-20deg);
+            opacity: 0;
+        }
+        
+        .card-swipe.swipe-right {
+            transform: translateX(150%) rotate(20deg);
+            opacity: 0;
+        }
+        
+        .tag {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .dark .card-bg {
+            background: var(--bg-card);
+        }
+        
+        .light .card-bg {
+            background: var(--bg-card);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            transition: all 0.2s ease;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-yellow);
+        }
+        
+        /* Scrollbar styling */
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .custom-scroll::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: var(--primary-yellow);
+            border-radius: 4px;
+        }
+        
+        .rating-star {
+            color: var(--primary-yellow);
+        }
+        
+        /* Page transitions */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Tab styles */
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            border-bottom: 3px solid var(--primary-yellow);
+            color: var(--primary-yellow);
+        }
+        
+        /* Movie card in match page */
+        .movie-card {
+            transition: transform 0.2s ease;
+        }
+        
+        .movie-card:active {
+            transform: scale(0.98);
+        }
