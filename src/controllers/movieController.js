@@ -7,15 +7,15 @@ const TMDB_IMAGE_BASE_URL = process.env.TMDB_IMAGE_BASE_URL;
 
 /**
  * Helper per fare richieste a TMDB
- * Centralizza la logica di chiamata e gestione errori
+ * Centralizza la logica di chiamata e gestione errori. semplifica il resto del programma.
  */
 const tmdbRequest = async (endpoint, params = {}) => {
   try {
     const response = await axios.get(`${TMDB_BASE_URL}${endpoint}`, {
       params: {
-        api_key: TMDB_API_KEY,
-        language: 'it-IT', // Film in italiano
-        ...params
+        api_key: TMDB_API_KEY, //la chiave si trova in .env
+        language: 'it-IT', // per ora richiede film in italiano
+        ...params //questo indica gli altri parametri che verranno passati
       }
     });
     return response.data;
@@ -26,7 +26,52 @@ const tmdbRequest = async (endpoint, params = {}) => {
 };
 
 // ============================================
-// OTTIENI FILM POPOLARI/DISCOVER
+// TRAILER CACHE + HELPER
+// ============================================
+// Semplice cache in memoria per evitare chiamate ripetute a TMDB
+// Key: movieId, Value: { key: string|null, expiresAt: number }
+const TRAILER_TTL_MS = 1000 * 60 * 60 * 6; // 6 ore
+const trailerCache = new Map();
+
+const getCachedTrailer = (id) => {
+  const entry = trailerCache.get(id);
+  if (!entry) return null;
+  if (Date.now() > entry.expiresAt) {
+    trailerCache.delete(id);
+    return null;
+  }
+  return entry.key;
+};
+
+const setCachedTrailer = (id, key) => {
+  trailerCache.set(id, { key, expiresAt: Date.now() + TRAILER_TTL_MS });
+};
+
+// Ritorna la YouTube key del trailer, se presente (altrimenti null)
+const getTrailerKey = async (movieId) => {
+  const cached = getCachedTrailer(movieId);
+  if (cached !== null && cached !== undefined) return cached;
+
+  // Prima prova lingua italiana, poi fallback a inglese
+  const byLang = async (lang) => {
+    const data = await tmdbRequest(`/movie/${movieId}/videos`, { language: lang });
+    const trailer = data?.results?.find(
+      (v) => v.type === 'Trailer' && v.site === 'YouTube'
+    );
+    return trailer?.key || null;
+  };
+
+  let key = await byLang('it-IT');
+  if (!key) {
+    key = await byLang('en-US');
+  }
+
+  setCachedTrailer(movieId, key || null);
+  return key;
+};
+
+// ============================================
+// OTTIENI FILM
 // GET /api/movies/discover
 // ============================================
 /**
@@ -39,14 +84,14 @@ exports.discoverMovies = async (req, res, next) => {
       page = 1, 
       genre = '', 
       year = '',
-      sort_by = 'popularity.desc' 
+      sort_by = 'popularity.desc'
     } = req.query;
 
     // Parametri per TMDB
     const params = {
       page,
       sort_by,
-      include_adult: false, // Escludi contenuti per adulti
+      include_adult: false, // Escludi contenuti per adulti per ora
       include_video: false
     };
 
@@ -56,8 +101,8 @@ exports.discoverMovies = async (req, res, next) => {
 
     const data = await tmdbRequest('/discover/movie', params);
 
-    // Formato i dati per il frontend
-    const movies = data.results.map(movie => ({
+    // contiene il formato dei dati da usare nel frontend.
+    const moviesBase = data.results.map(movie => ({
       id: movie.id,
       title: movie.title,
       overview: movie.overview,
@@ -68,6 +113,14 @@ exports.discoverMovies = async (req, res, next) => {
       voteCount: movie.vote_count,
       genres: movie.genre_ids // IDs dei generi
     }));
+    
+    // inserisci il codice del trailer in moviesBase
+    const movies = await Promise.all(
+      moviesBase.map(async (m) => ({
+        ...m,
+        trailer: await getTrailerKey(m.id)
+      }))
+    );
 
     res.status(200).json({
       success: true,
@@ -194,11 +247,11 @@ exports.searchMovies = async (req, res, next) => {
  */
 exports.getTrendingMovies = async (req, res, next) => {
   try {
-    const { timeWindow = 'week' } = req.query; // 'day' o 'week'
+    const { timeWindow = 'week', withTrailer } = req.query; // 'day' o 'week'
 
     const data = await tmdbRequest(`/trending/movie/${timeWindow}`);
 
-    const movies = data.results.map(movie => ({
+    let movies = data.results.map(movie => ({
       id: movie.id,
       title: movie.title,
       overview: movie.overview,
@@ -209,10 +262,35 @@ exports.getTrendingMovies = async (req, res, next) => {
       genres: movie.genre_ids
     }));
 
+    const includeTrailer = withTrailer === 'true' || withTrailer === '1';
+    if (includeTrailer && Array.isArray(movies) && movies.length) {
+      const enriched = await Promise.all(
+        movies.map(async (m) => ({
+          ...m,
+          trailer: await getTrailerKey(m.id)
+        }))
+      );
+      movies = enriched;
+    }
+
     res.status(200).json({
       success: true,
       data: { movies }
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ============================================
+// TRAILER SINGOLO
+// GET /api/movies/:id/trailer
+// ============================================
+exports.getMovieTrailer = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const key = await getTrailerKey(id);
+    res.status(200).json({ success: true, data: { trailer: key } });
   } catch (error) {
     next(error);
   }

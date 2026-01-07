@@ -36,4 +36,9 @@ router.get('/:id', protect, movieController.getMovieDetails);
 // ============================================
 router.get('/:id/similar', protect, movieController.getSimilarMovies);
 
+// ============================================
+// TRAILER SINGOLO
+// ============================================
+router.get('/:id/trailer', protect, movieController.getMovieTrailer);
+
 module.exports = router;
