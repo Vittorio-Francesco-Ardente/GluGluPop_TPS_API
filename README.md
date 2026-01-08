@@ -1,4 +1,5 @@
 <a id="top"></a>
+![GluGluPop Logo](design/logos/Asset_ReadMe.png)
 
 # 🎬 GluGluPop  
 ### Swipe. Match. Watch. Eat.
