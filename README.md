@@ -100,26 +100,6 @@ Il progetto presta particolare attenzione a:
 
 ---
 
-## 👨‍💻 Team & Organizzazione
-
-Il progetto è sviluppato in **collaborazione paritaria**, con responsabilità condivise sulla repository e sul codice.
-
-| Membro | Area | Responsabilità principali |
-|--------|------|---------------------------|
-| **Vittorio Francesco Ardente** | Design & Testing | Design UI/UX, prototipazione, test funzionali e usabilità, contributo continuo alla repository GitHub (commit, review, issue, documentazione) |
-| **Previtali Mattia** | Frontend | Sviluppo interfaccia React e componenti UI, contributo continuo alla repository GitHub (commit, review, issue, documentazione) |
-| **Niccolò Decano** | API & Dati | Integrazione e gestione API, normalizzazione dati, contributo continuo alla repository GitHub (commit, review, issue, documentazione) |
-| **Gamba Alessandro** | Backend & Coordinamento | Coordinamento tecnico, sviluppo backend, contributo continuo alla repository GitHub (commit, review, issue, documentazione) |
-
-📌 **Tutti i membri contribuiscono attivamente**:
-- alla gestione della repository  
-- alle decisioni progettuali  
-- alla qualità complessiva del prodotto  
-
-[⬆ Back to top](#top)
-
----
-
 ## 📬 Contatti
 
 Per informazioni, collaborazioni o chiarimenti:
