@@ -1,5 +1,5 @@
 <a id="top"></a>
-![GluGluPop Logo](design/Logos/Asset_ReadMe.png)
+![GluGluPop Logo](https://raw.githubusercontent.com/Vittorio-Francesco-Ardente/GluGluPop_TPS_API/design/Logos/Asset_ReadMe.png)
 
 # 🎬 GluGluPop  
 ### Swipe. Match. Watch. Eat.
