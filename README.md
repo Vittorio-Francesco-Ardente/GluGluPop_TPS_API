@@ -121,7 +121,7 @@ Il progetto è sviluppato in **collaborazione paritaria**, con responsabilità c
 Per informazioni, collaborazioni o chiarimenti:
 
 - 📧 ardente.vittorio.07@itisdalmine.edu.it  
-- 📧 previtali.mattia.08@itisdalmine.edu.it  
+- 📧 previtali.mattia.07@itisdalmine.edu.it  
 - 📧 decano.niccolo.07@itisdalmine.edu.it  
 - 📧 gamba.alessandro.07@itisdalmine.edu.it  
 
