@@ -82,7 +82,7 @@ Benvenuto nel branch Team! Qui trovi come ci siamo organizzati per il progetto.
 
 ## 💬 Comunicazione
 
-- Gruppo WhatsApp/Telegram per aggiornamenti veloci
+- Gruppo WhatsApp/Team per aggiornamenti veloci
 - Riunioni settimanali per fare il punto della situazione
 - GitHub per tutto quello che riguarda il codice
 
