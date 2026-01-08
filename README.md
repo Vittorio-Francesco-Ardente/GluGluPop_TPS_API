@@ -3,8 +3,8 @@
 # 🎬 GluGluPop  
 ### Swipe. Match. Watch. Eat.
 
-**GluGluPop** è un’app di intrattenimento che rivoluziona il modo di scoprire film e serie TV, trasformando l’indecisione in un’esperienza rapida, visiva e coinvolgente.  
-Ispirata ai meccanismi di swipe di TikTok e Tinder, GluGluPop unisce **cinema, raccomandazioni intelligenti e abbinamenti food & drink** in un’unica piattaforma moderna.
+**GluGluPop** è un'app di intrattenimento che rivoluziona il modo di scoprire film e serie TV, trasformando l'indecisione in un'esperienza rapida, visiva e coinvolgente.  
+Ispirata ai meccanismi di swipe di TikTok e Tinder, GluGluPop unisce **cinema, raccomandazioni intelligenti e abbinamenti food & drink** in un'unica piattaforma moderna.
 
 ---
 
@@ -14,10 +14,10 @@ GluGluPop non è un semplice catalogo di film.
 
 - Ridurre il tempo perso a scegliere cosa guardare  
 - Offrire suggerimenti personalizzati e dinamici  
-- Trasformare la visione in un’esperienza completa (film + cibo + drink)  
+- Trasformare la visione in un'esperienza completa (film + cibo + drink)  
 - Favorire la scelta condivisa grazie alla **modalità gruppo**
 
-🎯 **Obiettivo**: rendere la scoperta dell’intrattenimento semplice, divertente e memorabile.
+🎯 **Obiettivo**: rendere la scoperta dell'intrattenimento semplice, divertente e memorabile.
 
 [⬆ Back to top](#top)
 
@@ -29,7 +29,7 @@ GluGluPop non è un semplice catalogo di film.
   Trailer a schermo intero con like / skip immediato
 
 - 🧠 **Raccomandazioni Intelligenti**  
-  Algoritmi basati sui gusti e sulle interazioni dell’utente
+  Algoritmi basati sui gusti e sulle interazioni dell'utente
 
 - 👥 **Modalità Gruppo**  
   Decisioni condivise per serate cinema tra amici
@@ -84,8 +84,8 @@ GluGluPop non è un semplice catalogo di film.
 
 - Design **mobile-first**
 - Animazioni fluide e feedback immediato
-- Iconografia e branding ispirati ai grandi player dell’intrattenimento
-- Interfaccia moderna, intuitiva e orientata all’esperienza utente
+- Iconografia e branding ispirati ai grandi player dell'intrattenimento
+- Interfaccia moderna, intuitiva e orientata all'esperienza utente
 
 Il progetto presta particolare attenzione a:
 - leggibilità
@@ -100,12 +100,12 @@ Il progetto presta particolare attenzione a:
 
 Il progetto è sviluppato in **collaborazione paritaria**, con responsabilità condivise sulla repository e sul codice.
 
-| Membro | Responsabilità principali |
-|------|---------------------------|
-| **Vittorio Francesco Ardente** | UI/UX design, identità visiva, prototipazione, testing |
-| **Niccolò Decano** | Logica applicativa, integrazione API, supporto frontend |
-| **Previtali Mattia** | Architettura frontend, gestione stato, ottimizzazione |
-| **Gamba Alessandro** | Testing funzionale, documentazione, supporto sviluppo |
+| Membro | Area | Responsabilità principali |
+|--------|------|---------------------------|
+| **Vittorio Francesco Ardente** | Design & Testing | Design UI/UX, prototipazione, test funzionali e usabilità, contributo continuo alla repository GitHub (commit, review, issue, documentazione) |
+| **Previtali Mattia** | Frontend | Sviluppo interfaccia React e componenti UI, contributo continuo alla repository GitHub (commit, review, issue, documentazione) |
+| **Niccolò Decano** | API & Dati | Integrazione e gestione API, normalizzazione dati, contributo continuo alla repository GitHub (commit, review, issue, documentazione) |
+| **Gamba Alessandro** | Backend & Coordinamento | Coordinamento tecnico, sviluppo backend, contributo continuo alla repository GitHub (commit, review, issue, documentazione) |
 
 📌 **Tutti i membri contribuiscono attivamente**:
 - alla gestione della repository  
