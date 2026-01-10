@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GluGluPop — Cinema Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Header -->
+        <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; max-width: 430px; margin: 0 auto; background: var(--bg-primary); border-bottom: 1px solid var(--border);">
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: var(--text-primary);">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--bg-primary)" stroke-width="2.5">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </div>
+                    <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.5px;">GluGluPop</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <button id="muteBtn" class="header-btn">
+                        <svg id="muteIcon" viewBox="0 0 24 24">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        </svg>
+                    </button>
+                    <button id="searchBtn" class="header-btn">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- HOME PAGE -->
+        <main id="homePage" class="page active" style="padding: 76px 20px 100px;">
+            
+            <!-- Video Card -->
+            <div id="videoCard" class="card-swipe" style="position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 9/14; background: var(--bg-secondary); margin-top: 4px;">
+                <iframe 
+                    id="trailerFrame"
+                    style="width: 100%; height: 100%; border: none;"
+                    src="https://www.youtube.com/embed/8hP9D6kZseM?autoplay=1&mute=0&loop=1&playlist=8hP9D6kZseM&controls=0&showinfo=0&rel=0&modestbranding=1&enablejsapi=1&hl=it"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen
+                ></iframe>
+                
+                <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 35%, transparent 55%); pointer-events: none;"></div>
+                
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px;">
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                        <span id="filmGenre" class="film-tag">Fantascienza</span>
+                        <span id="filmDuration" class="film-tag">2h 28min</span>
+                    </div>
+                    <h2 id="filmTitle" style="font-size: 26px; font-weight: 700; color: white; margin: 0 0 6px 0; letter-spacing: -0.5px;">Inception</h2>
+                    <p id="filmMeta" style="font-size: 13px; color: rgba(255,255,255,0.65); margin: 0 0 16px 0;">Christopher Nolan · 2010</p>
+                    
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="rating-badge">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            <span id="filmRating" style="font-size: 13px; font-weight: 600; color: white;">4.5</span>
+                        </div>
+                        <button id="detailsBtn" style="padding: 10px 20px; border-radius: 20px; color: white; font-size: 13px; font-weight: 500; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; gap: 6px; border: none; cursor: pointer; transition: background 0.2s;">
+                            <span>Dettagli</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div style="display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 24px;">
+                <button id="skipBtn" class="action-btn skip" title="Salta">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <button id="saveBtn" class="action-btn" title="Salva">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                <button id="likeBtn" class="action-btn like" title="Mi piace">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Film Selector -->
+            <div style="margin-top: 32px;">
+                <p class="section-title">In programmazione</p>
+                <div id="filmList" style="display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px;"></div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                <div class="stat-card">
+                    <p style="font-size: 26px; font-weight: 700; margin: 0;" id="homeStatLiked">0</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin: 6px 0 0 0;">Preferiti</p>
+                </div>
+                <div class="stat-card">
+                    <p style="font-size: 26px; font-weight: 700; margin: 0;" id="homeStatWatchlist">0</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin: 6px 0 0 0;">Da vedere</p>
+                </div>
+                <div class="stat-card">
+                    <p style="font-size: 26px; font-weight: 700; margin: 0;" id="homeStatSwiped">0</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin: 6px 0 0 0;">Valutati</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- SALVATI PAGE -->
+        <div id="salvatiPage" class="page" style="padding: 76px 20px 100px;">
+            <div style="margin-bottom: 24px; margin-top: 8px;">
+                <h1 style="font-size: 26px; font-weight: 700; margin: 0; letter-spacing: -0.5px;">La tua libreria</h1>
+                <p style="font-size: 14px; color: var(--text-secondary); margin: 8px 0 0 0;">Film salvati e preferiti</p>
+            </div>
+            
+            <div style="display: flex; border-bottom: 1px solid var(--border); margin-bottom: 24px;">
+                <button class="tab-btn active" data-tab="liked" style="flex: 1;">Preferiti</button>
+                <button class="tab-btn" data-tab="watchlist" style="flex: 1;">Da vedere</button>
+            </div>
+            
+            <div id="likedList"></div>
+            <div id="watchlistList" style="display: none;"></div>
+            
+            <div id="emptyState" style="text-align: center; padding: 60px 20px;">
+                <div style="width: 72px; height: 72px; border-radius: 18px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; background: var(--bg-secondary); border: 1px solid var(--border);">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5">
+                        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                        <line x1="7" y1="2" x2="7" y2="22"></line>
+                        <line x1="17" y1="2" x2="17" y2="22"></line>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <line x1="2" y1="7" x2="7" y2="7"></line>
+                        <line x1="2" y1="17" x2="7" y2="17"></line>
+                        <line x1="17" y1="7" x2="22" y2="7"></line>
+                        <line x1="17" y1="17" x2="22" y2="17"></line>
+                    </svg>
+                </div>
+                <p style="font-size: 16px; font-weight: 600; margin: 0; color: var(--text-primary);">Nessun film salvato</p>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 8px 0 24px 0;">Esplora il catalogo e salva i tuoi preferiti</p>
+                <button onclick="switchPage('home')" class="btn-primary">Esplora film</button>
+            </div>
+        </div>
+
+        <!-- GRUPPI PAGE -->
+        <div id="gruppiPage" class="page" style="padding: 76px 20px 100px;">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; margin-top: 8px;">
+                <div>
+                    <h1 style="font-size: 26px; font-weight: 700; margin: 0; letter-spacing: -0.5px;">Gruppi</h1>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin: 8px 0 0 0;">Scegli cosa guardare insieme</p>
+                </div>
+                <button id="newGroupBtn" class="btn-primary" style="padding: 12px 20px; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Nuovo
+                </button>
+            </div>
+
+            <!-- Guida Gruppi -->
+            <div id="groupsGuide" style="margin-bottom: 32px;">
+                <p class="section-title">Come funziona</p>
+                
+                <div class="guide-step">
+                    <div class="guide-number">1</div>
+                    <div class="guide-content">
+                        <h4>Crea un gruppo</h4>
+                        <p>Dai un nome al tuo gruppo e aggiungi una descrizione per identificarlo facilmente.</p>
+                    </div>
+                </div>
+                
+                <div class="guide-step">
+                    <div class="guide-number">2</div>
+                    <div class="guide-content">
+                        <h4>Invita i tuoi amici</h4>
+                        <p>Aggiungi membri inserendo le loro email. Riceveranno un invito per unirsi al gruppo.</p>
+                    </div>
+                </div>
+                
+                <div class="guide-step">
+                    <div class="guide-number">3</div>
+                    <div class="guide-content">
+                        <h4>Proponi i film</h4>
+                        <p>Ogni membro può proporre film dal catalogo. Sfoglia e aggiungi quelli che ti interessano.</p>
+                    </div>
+                </div>
+                
+                <div class="guide-step">
+                    <div class="guide-number">4</div>
+                    <div class="guide-content">
+                        <h4>Decidete insieme</h4>
+                        <p>Votate i film proposti e scoprite quali piacciono a tutti. Il match perfetto per la vostra serata!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="section-title">I tuoi gruppi</p>
+            <div id="groupsList"></div>
+            
+            <div id="noGroups" style="text-align: center; padding: 40px 20px;">
+                <p style="font-size: 14px; color: var(--text-muted); margin: 0 0 20px 0;">Non hai ancora creato nessun gruppo</p>
+                <button id="createFirstGroup" class="btn-outline">Crea il tuo primo gruppo</button>
+            </div>
+        </div>
+
+        <!-- PROFILO PAGE -->
+        <div id="profiloPage" class="page" style="padding: 76px 20px 100px;">
+            <div style="margin-bottom: 32px; margin-top: 8px;">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div style="width: 76px; height: 76px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border: 2px solid var(--border);">
+                        <span style="font-size: 26px; font-weight: 700;">MR</span>
+                    </div>
+                    <div>
+                        <h1 style="font-size: 22px; font-weight: 700; margin: 0;">Mario Rossi</h1>
+                        <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 0 0;">mario.rossi@email.com</p>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin: 8px 0 0 0;">Membro dal Gennaio 2024</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px;">
+                <div class="stat-card">
+                    <p style="font-size: 28px; font-weight: 700; margin: 0;" id="statLiked">0</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin: 6px 0 0 0;">Preferiti</p>
+                </div>
+                <div class="stat-card">
+                    <p style="font-size: 28px; font-weight: 700; margin: 0;" id="statWatchlist">0</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin: 6px 0 0 0;">Da vedere</p>
+                </div>
+                <div class="stat-card">
+                    <p style="font-size: 28px; font-weight: 700; margin: 0;" id="statSwiped">0</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin: 6px 0 0 0;">Valutati</p>
+                </div>
+            </div>
+            
+            <!-- Preferences -->
+            <div class="card" style="padding: 20px; margin-bottom: 24px;">
+                <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 20px 0;">I tuoi generi preferiti</h3>
+                <div>
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                            <span>Fantascienza</span>
+                            <span style="color: var(--text-muted);">42%</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill" style="width: 42%;"></div></div>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                            <span>Thriller</span>
+                            <span style="color: var(--text-muted);">28%</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill" style="width: 28%;"></div></div>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                            <span>Azione</span>
+                            <span style="color: var(--text-muted);">18%</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill" style="width: 18%;"></div></div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                            <span>Drammatico</span>
+                            <span style="color: var(--text-muted);">12%</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill" style="width: 12%;"></div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings -->
+            <p class="section-title">Impostazioni</p>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="menu-item">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <span style="flex: 1; font-size: 14px;">Tema scuro</span>
+                    <div id="themeToggle" class="toggle-switch active"></div>
+                </div>
+                <div class="menu-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span style="flex: 1; font-size: 14px;">Notifiche</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+                <div class="menu-item">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span style="flex: 1; font-size: 14px;">Privacy e sicurezza</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+                <div class="menu-item">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <span style="flex: 1; font-size: 14px;">Centro assistenza</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+                <div class="menu-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span style="flex: 1; font-size: 14px;">Termini e condizioni</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </div>
+            
+            <div style="margin-top: 24px;">
+                <button class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Esci dall'account
+                </button>
+            </div>
+
+            <p style="text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 32px;">GluGluPop v1.0.0</p>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav style="position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; z-index: 40; background: var(--bg-primary); border-top: 1px solid var(--border);">
+            <div style="display: flex; justify-content: space-around; padding: 8px 0; padding-bottom: max(8px, env(safe-area-inset-bottom));">
+                <button class="nav-item active" data-page="home">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </button>
+                <button class="nav-item" data-page="salvati">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span>Salvati</span>
+                </button>
+                <button class="nav-item" data-page="gruppi">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Gruppi</span>
+                </button>
+                <button class="nav-item" data-page="profilo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Profilo</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Overlay -->
+        <div id="overlay" class="overlay" style="position: fixed; inset: 0; z-index: 50;"></div>
+
+        <!-- Film Details Sheet -->
+        <div id="detailsSheet" class="bottom-sheet" style="position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; z-index: 60; border-radius: 20px 20px 0 0; background: var(--bg-primary); max-height: 90vh; overflow-y: auto;">
+            <div style="position: sticky; top: 0; display: flex; justify-content: center; padding: 16px; background: var(--bg-primary); z-index: 10;">
+                <div style="width: 40px; height: 4px; border-radius: 2px; background: var(--border);"></div>
+            </div>
+            <div id="detailsContent" style="padding: 0 20px 40px;"></div>
+        </div>
+
+        <!-- Create Group Sheet -->
+        <div id="groupSheet" class="bottom-sheet" style="position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; z-index: 60; border-radius: 20px 20px 0 0; background: var(--bg-primary);">
+            <div style="display: flex; justify-content: center; padding: 16px;">
+                <div style="width: 40px; height: 4px; border-radius: 2px; background: var(--border);"></div>
+            </div>
+            <div style="padding: 0 20px 40px;">
+                <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 24px 0;">Crea nuovo gruppo</h2>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <label style="font-size: 13px; font-weight: 500; margin-bottom: 8px; display: block; color: var(--text-secondary);">Nome del gruppo *</label>
+                        <input type="text" id="groupNameInput" class="input-field" placeholder="Es. Serata cinema">
+                    </div>
+                    <div>
+                        <label style="font-size: 13px; font-weight: 500; margin-bottom: 8px; display: block; color: var(--text-secondary);">Descrizione</label>
+                        <input type="text" id="groupDescInput" class="input-field" placeholder="Una breve descrizione (opzionale)">
+                    </div>
+                    <div>
+                        <label style="font-size: 13px; font-weight: 500; margin-bottom: 8px; display: block; color: var(--text-secondary);">Invita un amico (email)</label>
+                        <input type="email" id="groupEmailInput" class="input-field" placeholder="amico@email.com">
+                    </div>
+                    <button id="confirmGroupBtn" class="btn-primary" style="margin-top: 8px;">Crea gruppo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Group Detail Sheet -->
+        <div id="groupDetailSheet" class="bottom-sheet" style="position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; z-index: 60; border-radius: 20px 20px 0 0; background: var(--bg-primary); max-height: 90vh; overflow-y: auto;">
+            <div style="position: sticky; top: 0; display: flex; justify-content: center; padding: 16px; background: var(--bg-primary); z-index: 10;">
+                <div style="width: 40px; height: 4px; border-radius: 2px; background: var(--border);"></div>
+            </div>
+            <div id="groupDetailContent" style="padding: 0 20px 40px;"></div>
+        </div>
+
+        <!-- Search Sheet -->
+        <div id="searchSheet" class="bottom-sheet" style="position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; z-index: 60; border-radius: 20px 20px 0 0; background: var(--bg-primary); max-height: 90vh; overflow-y: auto;">
+            <div style="position: sticky; top: 0; padding: 16px 20px; background: var(--bg-primary); z-index: 10;">
+                <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+                    <div style="width: 40px; height: 4px; border-radius: 2px; background: var(--border);"></div>
+                </div>
+                <div style="position: relative;">
+                    <svg style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; stroke: var(--text-muted); stroke-width: 1.5; fill: none;" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="searchInput" class="input-field" style="padding-left: 44px;" placeholder="Cerca film, regista, genere...">
+                </div>
+            </div>
+            <div id="searchResults" style="padding: 0 20px 40px;"></div>
+        </div>
+
+        <!-- Toast -->
+        <div id="toast" class="toast">
+            <span id="toastText"></span>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // DATA - Film con dettagli completi
+        // =============================================
+        const films = [
+            {
+                id: 1,
+                title: 'Inception',
+                year: 2010,
+                duration: '2h 28min',
+                rating: 4.5,
+                genre: 'Fantascienza',
+                poster: 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg',
+                youtube: '8hP9D6kZseM',
+                synopsis: 'Dom Cobb è un ladro specializzato nell\'estrarre segreti dal subconscio delle persone mentre dormono. Quando gli viene offerta la possibilità di cancellare il suo passato criminale, deve compiere l\'impossibile: innestare un\'idea nella mente di qualcuno.',
+                crew: {
+                    regia: 'Christopher Nolan',
+                    sceneggiatura: 'Christopher Nolan',
+                    produzione: 'Emma Thomas, Christopher Nolan',
+                    produttoreEsecutivo: 'Chris Brigham, Thomas Tull',
+                    fotografia: 'Wally Pfister',
+                    montaggio: 'Lee Smith',
+                    musiche: 'Hans Zimmer',
+                    scenografia: 'Guy Hendrix Dyas',
+                    costumi: 'Jeffrey Kurland',
+                    effettiVisivi: 'Paul Franklin, Chris Corbould'
+                },
+                cast: ['Leonardo DiCaprio', 'Joseph Gordon-Levitt', 'Elliot Page', 'Tom Hardy', 'Ken Watanabe', 'Cillian Murphy', 'Marion Cotillard', 'Michael Caine'],
+                platforms: ['Netflix', 'Prime Video', 'Apple TV+'],
+                pairing: {
+                    drink: 'Espresso Martini',
+                    drinkDesc: 'Un cocktail intenso e stratificato come i livelli del sogno.',
+                    food: 'Popcorn al tartufo nero',
+                    foodDesc: 'Sofisticato e con una profondità di sapore che rispecchia la complessità della trama.'
+                }
+            },
+            {
+                id: 2,
+                title: 'Interstellar',
+                year: 2014,
+                duration: '2h 49min',
+                rating: 4.8,
+                genre: 'Fantascienza',
+                poster: 'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg',
+                youtube: 'UoSSbmD9vqc',
+                synopsis: 'In un futuro prossimo, la Terra è devastata da carestie. Un gruppo di astronauti viaggia attraverso un wormhole alla ricerca di un nuovo pianeta abitabile per salvare l\'umanità.',
+                crew: {
+                    regia: 'Christopher Nolan',
+                    sceneggiatura: 'Jonathan Nolan, Christopher Nolan',
+                    produzione: 'Emma Thomas, Christopher Nolan, Lynda Obst',
+                    produttoreEsecutivo: 'Jordan Goldberg, Jake Myers, Kip Thorne',
+                    fotografia: 'Hoyte van Hoytema',
+                    montaggio: 'Lee Smith',
+                    musiche: 'Hans Zimmer',
+                    scenografia: 'Nathan Crowley',
+                    costumi: 'Mary Zophres',
+                    effettiVisivi: 'Paul Franklin, Andrew Lockley'
+                },
+                cast: ['Matthew McConaughey', 'Anne Hathaway', 'Jessica Chastain', 'Michael Caine', 'Matt Damon', 'Casey Affleck', 'Timothée Chalamet', 'Mackenzie Foy'],
+                platforms: ['Prime Video', 'Apple TV+'],
+                pairing: {
+                    drink: 'Old Fashioned',
+                    drinkDesc: 'Un classico senza tempo, come il legame tra padre e figlia.',
+                    food: 'Mais arrosto con burro salato',
+                    foodDesc: 'Un omaggio alle coltivazioni di Cooper, semplice ma evocativo.'
+                }
+            },
+            {
+                id: 3,
+                title: 'Dune',
+                year: 2021,
+                duration: '2h 35min',
+                rating: 4.3,
+                genre: 'Fantascienza',
+                poster: 'https://m.media-amazon.com/images/M/MV5BMDQ0NjgyN2YtNWViNS00YjA3LTkxNDktYzFkZTExZGMxZDkxXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
+                youtube: 'w0HgHet0sxg',
+                synopsis: 'Paul Atreides, giovane brillante destinato a un futuro straordinario, deve viaggiare verso il pianeta più pericoloso dell\'universo per assicurare un futuro alla sua famiglia e al suo popolo.',
+                crew: {
+                    regia: 'Denis Villeneuve',
+                    sceneggiatura: 'Jon Spaihts, Denis Villeneuve, Eric Roth',
+                    produzione: 'Mary Parent, Denis Villeneuve, Cale Boyter',
+                    produttoreEsecutivo: 'Tanya Lapointe, Joshua Grode, Herbert W. Gains',
+                    fotografia: 'Greig Fraser',
+                    montaggio: 'Joe Walker',
+                    musiche: 'Hans Zimmer',
+                    scenografia: 'Patrice Vermette',
+                    costumi: 'Jacqueline West, Robert Morgan',
+                    effettiVisivi: 'Paul Lambert, Gerd Nefzer'
+                },
+                cast: ['Timothée Chalamet', 'Zendaya', 'Rebecca Ferguson', 'Oscar Isaac', 'Jason Momoa', 'Stellan Skarsgård', 'Josh Brolin', 'Javier Bardem'],
+                platforms: ['Netflix', 'Prime Video'],
+                pairing: {
+                    drink: 'Tè alla menta marocchino',
+                    drinkDesc: 'Ispirato alle tradizioni del deserto, rinfrescante e rituale.',
+                    food: 'Mezze platter con hummus e falafel',
+                    foodDesc: 'Sapori mediorientali che evocano le dune di Arrakis.'
+                }
+            },
+            {
+                id: 4,
+                title: 'Il Cavaliere Oscuro',
+                year: 2008,
+                duration: '2h 32min',
+                rating: 4.9,
+                genre: 'Azione',
+                poster: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg',
+                youtube: 'TQfATDZY5Y4',
+                synopsis: 'Batman affronta la sua nemesi più pericolosa: il Joker, un criminale geniale che vuole gettare Gotham City nel caos più totale.',
+                crew: {
+                    regia: 'Christopher Nolan',
+                    sceneggiatura: 'Jonathan Nolan, Christopher Nolan',
+                    storia: 'Christopher Nolan, David S. Goyer',
+                    produzione: 'Christopher Nolan, Charles Roven, Emma Thomas',
+                    produttoreEsecutivo: 'Benjamin Melniker, Michael E. Uslan',
+                    fotografia: 'Wally Pfister',
+                    montaggio: 'Lee Smith',
+                    musiche: 'Hans Zimmer, James Newton Howard',
+                    scenografia: 'Nathan Crowley',
+                    costumi: 'Lindy Hemming',
+                    effettiVisivi: 'Nick Davis, Chris Corbould'
+                },
+                cast: ['Christian Bale', 'Heath Ledger', 'Aaron Eckhart', 'Maggie Gyllenhaal', 'Gary Oldman', 'Michael Caine', 'Morgan Freeman'],
+                platforms: ['Netflix', 'Prime Video', 'Apple TV+'],
+                pairing: {
+                    drink: 'Whiskey Sour',
+                    drinkDesc: 'Amaro e complesso come la doppia natura di Gotham.',
+                    food: 'Nachos con formaggio fuso e jalapeños',
+                    foodDesc: 'Croccanti e audaci, perfetti per una visione intensa.'
+                }
+            },
+            {
+                id: 5,
+                title: 'Oppenheimer',
+                year: 2023,
+                duration: '3h 0min',
+                rating: 4.7,
+                genre: 'Drammatico',
+                poster: 'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
+                youtube: 'bK6ldnjE3Y0',
+                synopsis: 'La storia di J. Robert Oppenheimer, il fisico che guidò il Progetto Manhattan e lo sviluppo della prima bomba atomica.',
+                crew: {
+                    regia: 'Christopher Nolan',
+                    sceneggiatura: 'Christopher Nolan',
+                    basataSu: '"American Prometheus" di Kai Bird e Martin J. Sherwin',
+                    produzione: 'Emma Thomas, Charles Roven, Christopher Nolan',
+                    produttoreEsecutivo: 'J. David Wargo, Thomas Hayslip',
+                    fotografia: 'Hoyte van Hoytema',
+                    montaggio: 'Jennifer Lame',
+                    musiche: 'Ludwig Göransson',
+                    scenografia: 'Ruth De Jong',
+                    costumi: 'Ellen Mirojnick',
+                    effettiVisivi: 'Andrew Jackson, Scott Fisher'
+                },
+                cast: ['Cillian Murphy', 'Emily Blunt', 'Robert Downey Jr.', 'Matt Damon', 'Florence Pugh', 'Josh Hartnett', 'Casey Affleck', 'Rami Malek'],
+                platforms: ['Prime Video', 'Apple TV+'],
+                pairing: {
+                    drink: 'Dry Martini',
+                    drinkDesc: 'Elegante e intellettuale, come le serate a Los Alamos.',
+                    food: 'Tagliere di formaggi stagionati',
+                    foodDesc: 'Raffinato e contemplativo, da gustare lentamente.'
+                }
+            }
+        ];
+
+        // =============================================
+        // STATE
+        // =============================================
+        let currentFilmIndex = 0;
+        let likedFilms = JSON.parse(localStorage.getItem('likedFilms')) || [];
+        let watchlistFilms = JSON.parse(localStorage.getItem('watchlistFilms')) || [];
+        let swipeCount = parseInt(localStorage.getItem('swipeCount')) || 0;
+        let groups = JSON.parse(localStorage.getItem('groups')) || [];
+        let isMuted = localStorage.getItem('isMuted') === 'true';
+        let isDarkTheme = localStorage.getItem('theme') !== 'light';
+
+        // =============================================
+        // DOM HELPERS
+        // =============================================
+        const $ = id => document.getElementById(id);
+        const $$ = sel => document.querySelectorAll(sel);
+
+        // =============================================
+        // STORAGE
+        // =============================================
+        function saveToStorage() {
+            localStorage.setItem('likedFilms', JSON.stringify(likedFilms));
+            localStorage.setItem('watchlistFilms', JSON.stringify(watchlistFilms));
+            localStorage.setItem('swipeCount', swipeCount.toString());
+            localStorage.setItem('groups', JSON.stringify(groups));
+            localStorage.setItem('isMuted', isMuted.toString());
+        }
+
+        // =============================================
+        // THEME
+        // =============================================
+        function initTheme() {
+            if (!isDarkTheme) {
+                document.documentElement.setAttribute('data-theme', 'light');
+                $('themeToggle').classList.remove('active');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                $('themeToggle').classList.add('active');
+            }
+        }
+
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+            
+            if (isDarkTheme) {
+                document.documentElement.removeAttribute('data-theme');
+                $('themeToggle').classList.add('active');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                $('themeToggle').classList.remove('active');
+            }
+        }
+
+        // =============================================
+        // INIT
+        // =============================================
+        function init() {
+            initTheme();
+            updateMuteIcon();
+            renderFilmList();
+            loadFilm(0);
+            bindEvents();
+            updateStats();
+            renderGroups();
+        }
+
+        // =============================================
+        // RENDER FUNCTIONS
+        // =============================================
+        function renderFilmList() {
+            $('filmList').innerHTML = films.map((f, i) => `
+                <div class="film-thumb ${i === 0 ? 'active' : ''}" style="flex-shrink: 0; width: 64px; height: 96px; background-image: url('${f.poster}'); background-size: cover; background-position: center;" data-index="${i}"></div>
+            `).join('');
+        }
+
+        function loadFilm(index) {
+            const f = films[index];
+            currentFilmIndex = index;
+            
+            $('filmTitle').textContent = f.title;
+            $('filmMeta').textContent = `${f.crew.regia} · ${f.year}`;
+            $('filmGenre').textContent = f.genre;
+            $('filmDuration').textContent = f.duration;
+            $('filmRating').textContent = f.rating;
+            
+            const muteParam = isMuted ? '1' : '0';
+            $('trailerFrame').src = `https://www.youtube.com/embed/${f.youtube}?autoplay=1&mute=${muteParam}&loop=1&playlist=${f.youtube}&controls=0&showinfo=0&rel=0&modestbranding=1&enablejsapi=1&hl=it`;
+            
+            $$('.film-thumb').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+        }
+
+        function updateMuteIcon() {
+            const icon = $('muteIcon');
+            if (isMuted) {
+                icon.innerHTML = `
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                `;
+            } else {
+                icon.innerHTML = `
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                `;
+            }
+        }
+
+        function renderSavedList(type) {
+            const list = type === 'liked' ? likedFilms : watchlistFilms;
+            const container = $(type === 'liked' ? 'likedList' : 'watchlistList');
+            
+            if (list.length === 0) {
+                container.innerHTML = '';
+                $('emptyState').style.display = 'block';
+            } else {
+                $('emptyState').style.display = 'none';
+                container.innerHTML = list.map(f => `
+                    <div class="card fade-in" style="display: flex; gap: 16px; padding: 16px; margin-bottom: 12px;">
+                        <div style="width: 72px; height: 108px; border-radius: 8px; background-image: url('${f.poster}'); background-size: cover; background-position: center; flex-shrink: 0;"></div>
+                        <div style="flex: 1; display: flex; flex-direction: column;">
+                            <h3 style="font-size: 15px; font-weight: 600; margin: 0;">${f.title}</h3>
+                            <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">${f.crew.regia} · ${f.year}</p>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--text-primary)" stroke="var(--text-primary)" stroke-width="1">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                <span style="font-size: 12px; color: var(--text-secondary);">${f.rating}</span>
+                                <span class="tag">${f.genre}</span>
+                            </div>
+                            <div style="display: flex; gap: 8px; margin-top: auto; padding-top: 12px;">
+                                <button onclick="showFilmDetails(${f.id})" class="btn-primary" style="padding: 10px 16px; font-size: 12px;">Dettagli</button>
+                                <button onclick="removeFilm(${f.id}, '${type}')" class="btn-secondary" style="padding: 10px 16px; font-size: 12px;">Rimuovi</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function renderGroups() {
+            if (groups.length === 0) {
+                $('groupsList').innerHTML = '';
+                $('noGroups').style.display = 'block';
+            } else {
+                $('noGroups').style.display = 'none';
+                $('groupsList').innerHTML = groups.map((g, i) => `
+                    <div class="group-card fade-in" onclick="openGroupDetail(${i})" style="margin-bottom: 12px;">
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px;">
+                            <div>
+                                <h3 style="font-size: 16px; font-weight: 600; margin: 0;">${g.name}</h3>
+                                <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 0 0;">${g.description || 'Nessuna descrizione'}</p>
+                            </div>
+                            <span class="tag">${g.films.length} film</span>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--border);">
+                            <div style="display: flex;">
+                                ${g.members.map(m => `<div class="member-avatar">${m.charAt(0).toUpperCase()}</div>`).join('')}
+                            </div>
+                            <span style="font-size: 12px; color: var(--text-muted);">${g.members.length} ${g.members.length === 1 ? 'membro' : 'membri'}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateStats() {
+            $('statLiked').textContent = likedFilms.length;
+            $('statWatchlist').textContent = watchlistFilms.length;
+            $('statSwiped').textContent = swipeCount;
+            $('homeStatLiked').textContent = likedFilms.length;
+            $('homeStatWatchlist').textContent = watchlistFilms.length;
+            $('homeStatSwiped').textContent = swipeCount;
+        }
+
+        // =============================================
+        // ACTIONS
+        // =============================================
+        function toggleMute() {
+            isMuted = !isMuted;
+            updateMuteIcon();
+            loadFilm(currentFilmIndex);
+            saveToStorage();
+        }
+
+        function swipeFilm(direction) {
+            const card = $('videoCard');
+            card.classList.add(`swipe-${direction}`);
+            swipeCount++;
+            
+            const film = films[currentFilmIndex];
+            
+            if (direction === 'right' && !likedFilms.find(f => f.id === film.id)) {
+                likedFilms.push(film);
+                showToast('Aggiunto ai preferiti');
+            } else if (direction === 'left') {
+                showToast('Film saltato');
+            }
+            
+            saveToStorage();
+            
+            setTimeout(() => {
+                card.classList.remove(`swipe-${direction}`);
+                loadFilm((currentFilmIndex + 1) % films.length);
+                updateStats();
+            }, 400);
+        }
+
+        function saveToWatchlist() {
+            const film = films[currentFilmIndex];
+            if (!watchlistFilms.find(f => f.id === film.id)) {
+                watchlistFilms.push(film);
+                showToast('Aggiunto alla watchlist');
+                updateStats();
+                saveToStorage();
+            } else {
+                showToast('Già nella watchlist');
+            }
+        }
+
+        function removeFilm(id, type) {
+            if (type === 'liked') {
+                likedFilms = likedFilms.filter(f => f.id !== id);
+                renderSavedList('liked');
+            } else {
+                watchlistFilms = watchlistFilms.filter(f => f.id !== id);
+                renderSavedList('watchlist');
+            }
+            updateStats();
+            saveToStorage();
+            showToast('Film rimosso');
+        }
+
+        function showFilmDetails(filmId) {
+            const f = filmId ? films.find(film => film.id === filmId) : films[currentFilmIndex];
+            
+            $('detailsContent').innerHTML = `
+                <div style="display: flex; gap: 20px; margin-bottom: 24px;">
+                    <div style="width: 120px; height: 180px; border-radius: 12px; background-image: url('${f.poster}'); background-size: cover; background-position: center; flex-shrink: 0;"></div>
+                    <div style="flex: 1;">
+                        <h2 style="font-size: 24px; font-weight: 700; margin: 0; letter-spacing: -0.5px;">${f.title}</h2>
+                        <p style="font-size: 13px; color: var(--text-muted); margin: 8px 0 0 0;">${f.year} · ${f.duration}</p>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; background: var(--bg-tertiary);">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--text-primary)" stroke="var(--text-primary)" stroke-width="1">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                <span style="font-size: 13px; font-weight: 600;">${f.rating}</span>
+                            </div>
+                            <span class="tag">${f.genre}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0;">Trama</h3>
+                    <p style="font-size: 13px; line-height: 1.7; color: var(--text-secondary); margin: 0;">${f.synopsis}</p>
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0;">Crew</h3>
+                    <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 4px 16px;">
+                        ${Object.entries(f.crew).map(([key, value]) => `
+                            <div class="detail-row">
+                                <span class="detail-label">${formatCrewLabel(key)}</span>
+                                <span class="detail-value">${value}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0;">Cast principale</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.6;">${f.cast.join(', ')}</p>
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0;">Disponibile su</h3>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        ${f.platforms.map(p => `<span class="tag">${p}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 32px;">
+                    <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 16px 0;">Consigliato per la visione</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="pairing-card">
+                            <div class="pairing-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M8 22h8M12 11V22M17 2l-1 5h-8l-1-5M5.5 7h13l-1.4 5.6a2 2 0 0 1-1.9 1.4H8.8a2 2 0 0 1-1.9-1.4L5.5 7z"/>
+                                </svg>
+                            </div>
+                            <p style="font-size: 13px; font-weight: 600; margin: 0 0 4px 0;">${f.pairing.drink}</p>
+                            <p style="font-size: 11px; color: var(--text-muted); margin: 0; line-height: 1.5;">${f.pairing.drinkDesc}</p>
+                        </div>
+                        <div class="pairing-card">
+                            <div class="pairing-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M2.27 21.7s9.87-3.5 12.73-6.36a4.5 4.5 0 0 0-6.36-6.37C5.77 11.84 2.27 21.7 2.27 21.7zM15.42 15.42l6.37-6.37M10.75 6.36L15.12 2l6.37 6.37-4.36 4.36"/>
+                                </svg>
+                            </div>
+                            <p style="font-size: 13px; font-weight: 600; margin: 0 0 4px 0;">${f.pairing.food}</p>
+                            <p style="font-size: 11px; color: var(--text-muted); margin: 0; line-height: 1.5;">${f.pairing.foodDesc}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 12px;">
+                    <button onclick="addToLiked(${f.id})" class="btn-primary" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                        Preferiti
+                    </button>
+                    <button onclick="addToWatchlist(${f.id})" class="btn-secondary" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        Da vedere
+                    </button>
+                </div>
+            `;
+            
+            openSheet('detailsSheet');
+        }
+
+        function formatCrewLabel(key) {
+            const labels = {
+                regia: 'Regia',
+                sceneggiatura: 'Sceneggiatura',
+                storia: 'Storia',
+                basataSu: 'Basato su',
+                produzione: 'Produzione',
+                produttoreEsecutivo: 'Produttore esecutivo',
+                fotografia: 'Fotografia',
+                montaggio: 'Montaggio',
+                musiche: 'Musiche',
+                scenografia: 'Scenografia',
+                costumi: 'Costumi',
+                effettiVisivi: 'Effetti visivi'
+            };
+            return labels[key] || key;
+        }
+
+        function addToLiked(id) {
+            const film = films.find(f => f.id === id);
+            if (!likedFilms.find(f => f.id === id)) {
+                likedFilms.push(film);
+                showToast('Aggiunto ai preferiti');
+                updateStats();
+                saveToStorage();
+            } else {
+                showToast('Già nei preferiti');
+            }
+            closeSheet();
+        }
+
+        function addToWatchlist(id) {
+            const film = films.find(f => f.id === id);
+            if (!watchlistFilms.find(f => f.id === id)) {
+                watchlistFilms.push(film);
+                showToast('Aggiunto alla watchlist');
+                updateStats();
+                saveToStorage();
+            } else {
+                showToast('Già nella watchlist');
+            }
+            closeSheet();
+        }
+
+        function createGroup() {
+            const name = $('groupNameInput').value.trim();
+            const desc = $('groupDescInput').value.trim();
+            const email = $('groupEmailInput').value.trim();
+            
+            if (!name) {
+                showToast('Inserisci un nome');
+                return;
+            }
+            
+            const members = ['Tu'];
+            if (email) members.push(email.split('@')[0]);
+            
+            groups.push({
+                name,
+                description: desc,
+                members,
+                films: [],
+                createdAt: new Date().toISOString()
+            });
+            
+            $('groupNameInput').value = '';
+            $('groupDescInput').value = '';
+            $('groupEmailInput').value = '';
+            
+            closeSheet();
+            renderGroups();
+            saveToStorage();
+            showToast('Gruppo creato');
+        }
+
+        function openGroupDetail(index) {
+            const g = groups[index];
+            
+            $('groupDetailContent').innerHTML = `
+                <div style="margin-bottom: 24px;">
+                    <h2 style="font-size: 24px; font-weight: 700; margin: 0;">${g.name}</h2>
+                    <p style="font-size: 13px; color: var(--text-muted); margin: 8px 0 0 0;">${g.description || 'Nessuna descrizione'}</p>
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 16px 0;">Membri (${g.members.length})</h3>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        ${g.members.map((m, i) => `
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; background: var(--bg-secondary); border: 1px solid var(--border);">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary);">
+                                    <span style="font-size: 14px; font-weight: 600;">${m.charAt(0).toUpperCase()}</span>
+                                </div>
+                                <span style="font-size: 14px; flex: 1;">${m}</span>
+                                ${i === 0 ? '<span class="tag">Admin</span>' : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 16px 0;">Film proposti (${g.films.length})</h3>
+                    ${g.films.length === 0 ? 
+                        `<p style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 32px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px;">Nessun film proposto</p>` :
+                        `<div style="display: flex; flex-direction: column; gap: 8px;">${g.films.map(f => `
+                            <div class="card" style="display: flex; gap: 12px; padding: 12px;">
+                                <div style="width: 48px; height: 72px; border-radius: 6px; background-image: url('${f.poster}'); background-size: cover; background-position: center;"></div>
+                                <div>
+                                    <p style="font-size: 14px; font-weight: 600; margin: 0;">${f.title}</p>
+                                    <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">${f.year}</p>
+                                </div>
+                            </div>
+                        `).join('')}</div>`
+                    }
+                </div>
+                
+                <div style="margin-bottom: 32px;">
+                    <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 16px 0;">Aggiungi film</h3>
+                    <div style="display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px;">
+                        ${films.map(f => `
+                            <div class="film-thumb" onclick="addFilmToGroup(${index}, ${f.id})" style="flex-shrink: 0; width: 64px; height: 96px; background-image: url('${f.poster}'); background-size: cover; background-position: center;"></div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 12px;">
+                    <button onclick="inviteToGroup(${index})" class="btn-primary" style="flex: 1;">Invita amici</button>
+                    <button onclick="deleteGroup(${index})" class="btn-secondary" style="padding: 14px 20px;">Elimina</button>
+                </div>
+            `;
+            
+            openSheet('groupDetailSheet');
+        }
+
+        function addFilmToGroup(groupIndex, filmId) {
+            const film = films.find(f => f.id === filmId);
+            const group = groups[groupIndex];
+            
+            if (!group.films.find(f => f.id === filmId)) {
+                group.films.push(film);
+                showToast('Film aggiunto');
+                saveToStorage();
+                openGroupDetail(groupIndex);
+            } else {
+                showToast('Film già nel gruppo');
+            }
+        }
+
+        function inviteToGroup(index) {
+            const email = prompt('Email del membro:');
+            if (email && email.includes('@')) {
+                groups[index].members.push(email.split('@')[0]);
+                saveToStorage();
+                openGroupDetail(index);
+                showToast('Membro invitato');
+            }
+        }
+
+        function deleteGroup(index) {
+            if (confirm('Eliminare questo gruppo?')) {
+                groups.splice(index, 1);
+                closeSheet();
+                renderGroups();
+                saveToStorage();
+                showToast('Gruppo eliminato');
+            }
+        }
+
+        function searchFilms(query) {
+            if (!query.trim()) {
+                $('searchResults').innerHTML = `<p style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 13px;">Cerca per titolo, regista o genere</p>`;
+                return;
+            }
+
+            const results = films.filter(f => 
+                f.title.toLowerCase().includes(query.toLowerCase()) ||
+                f.crew.regia.toLowerCase().includes(query.toLowerCase()) ||
+                f.genre.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            $('searchResults').innerHTML = results.length ? results.map(f => `
+                <div class="card fade-in" style="display: flex; gap: 12px; padding: 12px; margin-bottom: 12px; cursor: pointer;" onclick="showFilmDetails(${f.id})">
+                    <div style="width: 56px; height: 84px; border-radius: 8px; background-image: url('${f.poster}'); background-size: cover; background-position: center; flex-shrink: 0;"></div>
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 14px; font-weight: 600; margin: 0;">${f.title}</h3>
+                        <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">${f.crew.regia} · ${f.year}</p>
+                        <span class="tag" style="margin-top: 8px;">${f.genre}</span>
+                    </div>
+                </div>
+            `).join('') : `<p style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 13px;">Nessun risultato</p>`;
+        }
+
+        // =============================================
+        // UI HELPERS
+        // =============================================
+        function openSheet(sheetId) {
+            $(sheetId).classList.add('open');
+            $('overlay').classList.add('open');
+        }
+
+        function closeSheet() {
+            $$('.bottom-sheet').forEach(s => s.classList.remove('open'));
+            $('overlay').classList.remove('open');
+        }
+
+        function showToast(message) {
+            $('toastText').textContent = message;
+            $('toast').classList.add('show');
+            setTimeout(() => $('toast').classList.remove('show'), 2500);
+        }
+
+        function switchPage(pageName) {
+            $$('.page').forEach(p => p.classList.remove('active'));
+            $(pageName + 'Page').classList.add('active');
+            
+            $$('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
+            
+            if (pageName === 'salvati') renderSavedList('liked');
+        }
+
+        // =============================================
+        // EVENT BINDINGS
+        // =============================================
+        function bindEvents() {
+            // Navigation
+            $$('.nav-item').forEach(item => {
+                item.addEventListener('click', () => switchPage(item.dataset.page));
+            });
+            
+            // Film selector
+            $('filmList').addEventListener('click', e => {
+                const thumb = e.target.closest('.film-thumb');
+                if (thumb) loadFilm(parseInt(thumb.dataset.index));
+            });
+            
+            // Action buttons
+            $('likeBtn').addEventListener('click', () => swipeFilm('right'));
+            $('skipBtn').addEventListener('click', () => swipeFilm('left'));
+            $('saveBtn').addEventListener('click', saveToWatchlist);
+            $('detailsBtn').addEventListener('click', () => showFilmDetails());
+            
+            // Mute
+            $('muteBtn').addEventListener('click', toggleMute);
+            
+            // Theme
+            $('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Tabs
+            $$('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    $$('.tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const tab = btn.dataset.tab;
+                    $('likedList').style.display = tab === 'liked' ? 'block' : 'none';
+                    $('watchlistList').style.display = tab === 'watchlist' ? 'block' : 'none';
+                    renderSavedList(tab);
+                });
+            });
+            
+            // Groups
+            $('newGroupBtn').addEventListener('click', () => openSheet('groupSheet'));
+            $('createFirstGroup').addEventListener('click', () => openSheet('groupSheet'));
+            $('confirmGroupBtn').addEventListener('click', createGroup);
+            
+            // Search
+            $('searchBtn').addEventListener('click', () => {
+                openSheet('searchSheet');
+                setTimeout(() => $('searchInput').focus(), 300);
+            });
+            $('searchInput').addEventListener('input', e => searchFilms(e.target.value));
+            
+            // Overlay
+            $('overlay').addEventListener('click', closeSheet);
+            
+            // Touch swipe
+            let startX = 0, currentX = 0, isDragging = false;
+            const card = $('videoCard');
+            
+            card.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+            }, { passive: true });
+            
+            card.addEventListener('touchmove', e => {
+                if (!isDragging) return;
+                currentX = e.touches[0].clientX;
+                const diff = currentX - startX;
+                card.style.transform = `translateX(${diff * 0.5}px) rotate(${diff * 0.02}deg)`;
+                card.style.transition = 'none';
+            }, { passive: true });
+            
+            card.addEventListener('touchend', () => {
+                isDragging = false;
+                const diff = currentX - startX;
+                card.style.transition = '';
+                
+                if (Math.abs(diff) > 100) {
+                    swipeFilm(diff > 0 ? 'right' : 'left');
+                } else {
+                    card.style.transform = '';
+                }
+                startX = 0;
+                currentX = 0;
+            });
+        }
+
+        // =============================================
+        // START APP
+        // =============================================
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
