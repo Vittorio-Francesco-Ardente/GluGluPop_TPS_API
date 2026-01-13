@@ -148,7 +148,7 @@ exports.getMe = async (req, res, next) => {
 // ============================================
 exports.updatePreferences = async (req, res, next) => {
   try {
-    const { genresPreferred } = req.body;
+    const genresPreferred = Array.isArray(req.body) ? req.body : req.body.genresPreferred;
 
     const user = await User.findByPk(req.user.id);
 

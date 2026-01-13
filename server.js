@@ -20,7 +20,7 @@ const startServer = async () => {
 ║        🎬 GluGluPop Backend API        ║
 ║                                        ║
 ║  🚀 Server: http://localhost:${PORT}      ║
-║  📝 Environment: ${process.env.NODE_ENV}         ║
+║  📝 Environment: ${process.env.NODE_ENV}           ║
 ║  💾 Database: SQLite                   ║
 ║                                        ║
 ╚════════════════════════════════════════╝
