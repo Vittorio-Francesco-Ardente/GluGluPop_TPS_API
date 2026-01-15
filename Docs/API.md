@@ -1,40 +1,46 @@
-GluGluPop API Reference
+# GluGluPop API Reference
 
-Indice
+## Indice
 
 API.md  
-├── Auth Endpoints  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── POST /auth/register  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── POST /auth/login  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── GET /auth/me  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── PUT /auth/preferences  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── PUT /auth/profile  
-├── Movie Endpoints  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── GET /movies/discover  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── GET /movies/trending  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── GET /movies/search  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── GET /movies/:id  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── GET /movies/:id/trailer  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── GET /movies/:id/similar  
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── GET /movies/genres  
-├── Swipe Endpoints  
-├── Group Endpoints  
-└── Recommendation Endpoints  
+├── [Auth Endpoints](#-auth-endpoints)  
+│        ├── [POST /auth/register](#post-authregister)  
+│        ├── [POST /auth/login](#post-authlogin)  
+│        ├── [GET /auth/me](#get-authme)  
+│        ├── [PUT /auth/preferences](#put-authpreferences)  
+│        └── [PUT /auth/profile](#put-authprofile)  
+├── [Movie Endpoints](#-movie-endpoints)  
+│        ├── [GET /movies/discover](#get-moviesdiscover)  
+│        ├── [GET /movies/trending](#get-moviestrending)  
+│        ├── [GET /movies/search](#get-moviessearch)  
+│        ├── [GET /movies/:id](#get-moviesid)  
+│        ├── [GET /movies/:id/trailer](#get-moviesidtrailer)  
+│        ├── [GET /movies/:id/similar](#get-moviesidsimilar)  
+│        └── [GET /movies/genres](#get-moviesgenres)  
+├── [Swipe Endpoints](#-swipe-endpoints)  
+│        ├── [POST /swipes](#post-swipes)  
+│        ├── [GET /swipes/likes](#get-swipeslikes)  
+│        ├── [GET /swipes/history](#get-swipeshistory)  
+│        ├── [GET /swipes/seen-ids](#get-swipesseen-ids)  
+│        ├── [GET /swipes/stats](#get-swipesstats)  
+│        └── [DELETE /swipes/:movieId](#delete-swipesmovieid)  
+├── [Group Endpoints](#-group-endpoints)  
+└── [Recommendation Endpoints](#-recommendation-endpoints)  
 
 ---
 
-🔐 Auth Endpoints
+## 🔐 Auth Endpoints
 
-POST /auth/register
+### POST /auth/register
 
 Registrazione nuovo utente.
 
-Body Parameters:
-- email (string, required) - Email utente
-- password (string, required) - Password
-- username (string, required) - Username univoco
+**Body Parameters:**
+- `email` (string, required) - Email utente
+- `password` (string, required) - Password
+- `username` (string, required) - Username univoco
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -51,11 +57,11 @@ Risposta:
 }
 ```
 
-Errori:
-- 400 - Email già registrata
-- 400 - Username già in uso
+**Errori:**
+- `400` - Email già registrata
+- `400` - Username già in uso
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl -X POST "http://localhost:5000/api/auth/register" \
   -H "Content-Type: application/json" \
@@ -68,15 +74,15 @@ curl -X POST "http://localhost:5000/api/auth/register" \
 
 ---
 
-POST /auth/login
+### POST /auth/login
 
 Login utente esistente.
 
-Body Parameters:
-- email (string, required) - Email utente
-- password (string, required) - Password
+**Body Parameters:**
+- `email` (string, required) - Email utente
+- `password` (string, required) - Password
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -96,10 +102,10 @@ Risposta:
 }
 ```
 
-Errori:
-- 401 - Credenziali non valide
+**Errori:**
+- `401` - Credenziali non valide
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl -X POST "http://localhost:5000/api/auth/login" \
   -H "Content-Type: application/json" \
@@ -111,13 +117,13 @@ curl -X POST "http://localhost:5000/api/auth/login" \
 
 ---
 
-GET /auth/me
+### GET /auth/me
 
 Ottieni profilo utente corrente.
 
 > Richiede autenticazione JWT.
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -137,10 +143,10 @@ Risposta:
 }
 ```
 
-Errori:
-- 401 - Token mancante o non valido
+**Errori:**
+- `401` - Token mancante o non valido
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl "http://localhost:5000/api/auth/me" \
   -H "Authorization: Bearer YOUR_TOKEN"
@@ -148,16 +154,16 @@ curl "http://localhost:5000/api/auth/me" \
 
 ---
 
-PUT /auth/preferences
+### PUT /auth/preferences
 
 Aggiorna preferenze generi utente.
 
 > Richiede autenticazione JWT.
 
-Body Parameters:
-- genresPreferred (array, required) - Array di ID generi
+**Body Parameters:**
+- `genresPreferred` (array, required) - Array di ID generi
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -168,11 +174,11 @@ Risposta:
 }
 ```
 
-Note:
-- Accetta anche array diretto nel body (senza chiave genresPreferred)
+**Note:**
+- Accetta anche array diretto nel body (senza chiave `genresPreferred`)
 - Utilizzato per personalizzare raccomandazioni
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl -X PUT "http://localhost:5000/api/auth/preferences" \
   -H "Authorization: Bearer YOUR_TOKEN" \
@@ -184,17 +190,17 @@ curl -X PUT "http://localhost:5000/api/auth/preferences" \
 
 ---
 
-PUT /auth/profile
+### PUT /auth/profile
 
 Aggiorna profilo utente.
 
 > Richiede autenticazione JWT.
 
-Body Parameters:
-- username (string, optional) - Nuovo username
-- avatar (string, optional) - URL avatar
+**Body Parameters:**
+- `username` (string, optional) - Nuovo username
+- `avatar` (string, optional) - URL avatar
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -216,10 +222,10 @@ Risposta:
 }
 ```
 
-Errori:
-- 400 - Username già in uso
+**Errori:**
+- `400` - Username già in uso
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl -X PUT "http://localhost:5000/api/auth/profile" \
   -H "Authorization: Bearer YOUR_TOKEN" \
@@ -231,21 +237,23 @@ curl -X PUT "http://localhost:5000/api/auth/profile" \
 ```
 
 ---
-🎬 Movie Endpoints
+
+
+## 🎬 Movie Endpoints
 
 > Tutti gli endpoint movie richiedono autenticazione JWT.
 
-GET /movies/discover
+### GET /movies/discover
 
 Scopri film con filtri opzionali. Usato per il feed principale.
 
-Query Parameters:
-- page (number, default: 1) - Numero pagina
-- genre (string, optional) - ID genere (es. "28" per Action)
-- year (number, optional) - Anno di uscita
-- sort_by (string, default: "popularity.desc") - Ordinamento
+**Query Parameters:**
+- `page` (number, default: 1) - Numero pagina
+- `genre` (string, optional) - ID genere (es. "28" per Action)
+- `year` (number, optional) - Anno di uscita
+- `sort_by` (string, default: "popularity.desc") - Ordinamento
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -271,7 +279,7 @@ Risposta:
 }
 ```
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl "http://localhost:5000/api/movies/discover?page=1&genre=28" \
   -H "Authorization: Bearer YOUR_TOKEN"
@@ -279,14 +287,14 @@ curl "http://localhost:5000/api/movies/discover?page=1&genre=28" \
 
 ---
 
-GET /movies/trending
+### GET /movies/trending
 
 Film più popolari del momento.
 
-Query Parameters:
-- timeWindow (string, default: "week") - "day" o "week"
+**Query Parameters:**
+- `timeWindow` (string, default: "week") - "day" o "week"
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -308,7 +316,7 @@ Risposta:
 }
 ```
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl "http://localhost:5000/api/movies/trending?timeWindow=day" \
   -H "Authorization: Bearer YOUR_TOKEN"
@@ -316,15 +324,15 @@ curl "http://localhost:5000/api/movies/trending?timeWindow=day" \
 
 ---
 
-GET /movies/search
+### GET /movies/search
 
 Cerca film per titolo.
 
-Query Parameters:
-- q (string, required) - Titolo da cercare
-- page (number, default: 1) - Numero pagina
+**Query Parameters:**
+- `q` (string, required) - Titolo da cercare
+- `page` (number, default: 1) - Numero pagina
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -346,7 +354,7 @@ Risposta:
 }
 ```
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl "http://localhost:5000/api/movies/search?q=matrix&page=1" \
   -H "Authorization: Bearer YOUR_TOKEN"
@@ -354,14 +362,14 @@ curl "http://localhost:5000/api/movies/search?q=matrix&page=1" \
 
 ---
 
-GET /movies/:id
+### GET /movies/:id
 
 Dettagli completi di un singolo film.
 
-Parametri URL:
-- id (number, required) - ID del film su TMDB
+**Parametri URL:**
+- `id` (number, required) - ID del film su TMDB
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -397,7 +405,7 @@ Risposta:
 }
 ```
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl "http://localhost:5000/api/movies/603" \
   -H "Authorization: Bearer YOUR_TOKEN"
@@ -405,14 +413,14 @@ curl "http://localhost:5000/api/movies/603" \
 
 ---
 
-GET /movies/:id/trailer
+### GET /movies/:id/trailer
 
 Ottieni solo il trailer di un film (YouTube key).
 
-Parametri URL:
-- id (number, required) - ID del film su TMDB
+**Parametri URL:**
+- `id` (number, required) - ID del film su TMDB
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -422,39 +430,39 @@ Risposta:
 }
 ```
 
-Note:
-- Se trailer non disponibile: "trailer": null
+**Note:**
+- Se trailer non disponibile: `"trailer": null`
 - Prova prima lingua italiana, fallback a inglese
 - Cache in memoria per 6 ore
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl "http://localhost:5000/api/movies/603/trailer" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
-Utilizzo frontend:
+**Utilizzo frontend:**
 ```javascript
 // Costruisci URL YouTube
 const trailerKey = "m8e-FF8MsqU";
-const youtubeUrl = https://www.youtube.com/watch?v=${trailerKey};
-const embedUrl = https://www.youtube.com/embed/${trailerKey}?autoplay=1;
+const youtubeUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
+const embedUrl = `https://www.youtube.com/embed/${trailerKey}?autoplay=1`;
 ```
 
 ---
 
-GET /movies/:id/similar
+### GET /movies/:id/similar
 
 Film simili a quello specificato.
 
 
-Parametri URL:
-- id (number, required) - ID del film su TMDB
+**Parametri URL:**
+- `id` (number, required) - ID del film su TMDB
 
-Query Parameters:
-- page (number, default: 1) - Numero pagina
+**Query Parameters:**
+- `page` (number, default: 1) - Numero pagina
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -473,7 +481,7 @@ Risposta:
 }
 ```
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl "http://localhost:5000/api/movies/603/similar?page=1" \
   -H "Authorization: Bearer YOUR_TOKEN"
@@ -481,11 +489,11 @@ curl "http://localhost:5000/api/movies/603/similar?page=1" \
 
 ---
 
-GET /movies/genres
+### GET /movies/genres
 
 Lista completa dei generi disponibili.
 
-Risposta:
+**Risposta:**
 ```json
 {
   "success": true,
@@ -501,12 +509,12 @@ Risposta:
 }
 ```
 
-Utilizzo:
-- Convertire genre_ids in nomi leggibili
+**Utilizzo:**
+- Convertire `genre_ids` in nomi leggibili
 - Popolare filtri nella UI
-- Risultati in italiano (grazie a language=it-IT)
+- Risultati in italiano (grazie a `language=it-IT`)
 
-Esempio cURL:
+**Esempio cURL:**
 ```bash
 curl "http://localhost:5000/api/movies/genres" \
   -H "Authorization: Bearer YOUR_TOKEN"
@@ -514,18 +522,282 @@ curl "http://localhost:5000/api/movies/genres" \
 
 ---
 
-👆 Swipe Endpoints
+## 👆 Swipe Endpoints
 
-Da documentare
+### POST /swipes
+
+Registra uno swipe (like/skip/superlike) su un film.
+
+> Richiede autenticazione JWT.
+
+**Body Parameters:**
+- `movieId` (number, required) - ID del film su TMDB
+- `movieTitle` (string, required) - Titolo del film
+- `moviePoster` (string, optional) - URL poster del film
+- `movieGenres` (array, optional) - Array di ID generi
+- `action` (string, required) - Tipo di swipe: "like", "skip", "superlike"
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "message": "❤️ Film aggiunto ai preferiti!",
+  "data": {
+    "swipe": {
+      "id": 123,
+      "userId": 1,
+      "movieId": 603,
+      "movieTitle": "Matrix",
+      "moviePoster": "https://image.tmdb.org/t/p/w500/...",
+      "movieGenres": [28, 878],
+      "action": "like",
+      "createdAt": "2024-01-15T10:30:00.000Z",
+      "updatedAt": "2024-01-15T10:30:00.000Z"
+    }
+  }
+}
+```
+
+**Note:**
+- Se esiste già uno swipe per questo film, viene aggiornato
+- Le statistiche utente (totalLikes/totalSkips) vengono aggiornate automaticamente
+- Message varia: "❤️ Film aggiunto ai preferiti!" per like, "⭐️ Film saltato" per skip
+
+**Esempio cURL:**
+```bash
+curl -X POST "http://localhost:5000/api/swipes" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "movieId": 603,
+    "movieTitle": "Matrix",
+    "moviePoster": "https://image.tmdb.org/t/p/w500/...",
+    "movieGenres": [28, 878],
+    "action": "like"
+  }'
+```
 
 ---
 
-👥 Group Endpoints
+### GET /swipes/likes
 
-Da documentare
+Ottieni tutti i film con like o superlike.
+
+> Richiede autenticazione JWT.
+
+**Query Parameters:**
+- `page` (number, default: 1) - Numero pagina
+- `limit` (number, default: 20) - Risultati per pagina
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "likes": [
+      {
+        "id": 123,
+        "userId": 1,
+        "movieId": 603,
+        "movieTitle": "Matrix",
+        "moviePoster": "https://image.tmdb.org/t/p/w500/...",
+        "movieGenres": [28, 878],
+        "action": "like",
+        "createdAt": "2024-01-15T10:30:00.000Z",
+        "updatedAt": "2024-01-15T10:30:00.000Z"
+      }
+    ],
+    "pagination": {
+      "page": 1,
+      "limit": 20,
+      "total": 42,
+      "pages": 3
+    }
+  }
+}
+```
+
+**Note:**
+- Include sia "like" che "superlike"
+- Ordinamento: più recenti prima
+- Utile per visualizzare la watchlist dell'utente
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/swipes/likes?page=1&limit=20" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
 
 ---
 
-🎯 Recommendation Endpoints
+### GET /swipes/history
 
-Da documentare
+Ottieni lo storico completo di tutti gli swipe.
+
+> Richiede autenticazione JWT.
+
+**Query Parameters:**
+- `page` (number, default: 1) - Numero pagina
+- `limit` (number, default: 50) - Risultati per pagina
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "swipes": [
+      {
+        "id": 123,
+        "userId": 1,
+        "movieId": 603,
+        "movieTitle": "Matrix",
+        "moviePoster": "https://image.tmdb.org/t/p/w500/...",
+        "movieGenres": [28, 878],
+        "action": "like",
+        "createdAt": "2024-01-15T10:30:00.000Z",
+        "updatedAt": "2024-01-15T10:30:00.000Z"
+      },
+      {
+        "id": 124,
+        "userId": 1,
+        "movieId": 550,
+        "movieTitle": "Fight Club",
+        "moviePoster": "https://...",
+        "movieGenres": [18],
+        "action": "skip",
+        "createdAt": "2024-01-15T10:25:00.000Z",
+        "updatedAt": "2024-01-15T10:25:00.000Z"
+      }
+    ],
+    "pagination": {
+      "page": 1,
+      "limit": 50,
+      "total": 120,
+      "pages": 3
+    }
+  }
+}
+```
+
+**Note:**
+- Include like, skip e superlike
+- Ordinamento: più recenti prima
+- Limite default più alto (50) rispetto a /likes
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/swipes/history?page=1&limit=50" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+---
+
+### GET /swipes/seen-ids
+
+Ottieni gli ID di tutti i film già visti (swipati).
+
+> Richiede autenticazione JWT.
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "seenIds": [603, 550, 624, 155, 13]
+  }
+}
+```
+
+**Utilizzo:**
+- Evitare di riproporre film già visti nel feed discover
+- Filtro lato frontend o backend per nuove raccomandazioni
+- Ottimizzato: ritorna solo array di ID (no dati completi)
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/swipes/seen-ids" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+---
+
+### GET /swipes/stats
+
+Statistiche dettagliate sugli swipe dell'utente.
+
+> Richiede autenticazione JWT.
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "totalLikes": 42,
+    "totalSkips": 15,
+    "totalSwipes": 57,
+    "likeRate": "73.7%",
+    "favoriteGenres": [
+      { "genreId": 28, "count": 18 },
+      { "genreId": 878, "count": 15 },
+      { "genreId": 35, "count": 12 },
+      { "genreId": 27, "count": 8 },
+      { "genreId": 53, "count": 6 }
+    ]
+  }
+}
+```
+
+**Note:**
+- `likeRate`: Percentuale di like sul totale swipe
+- `favoriteGenres`: Top 5 generi più apprezzati (basato su like)
+- Utile per dashboard utente o personalizzazione raccomandazioni
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/swipes/stats" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+---
+
+### DELETE /swipes/:movieId
+
+Elimina uno swipe (rimuovi dai preferiti).
+
+> Richiede autenticazione JWT.
+
+**Parametri URL:**
+- `movieId` (number, required) - ID del film su TMDB
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "message": "Swipe eliminato! 🗑️"
+}
+```
+
+**Errori:**
+- `404` - Swipe non trovato
+
+**Note:**
+- Le statistiche utente (totalLikes/totalSkips) vengono aggiornate automaticamente
+- Utile per "cambiare idea" o pulire la watchlist
+
+**Esempio cURL:**
+```bash
+curl -X DELETE "http://localhost:5000/api/swipes/603" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+---
+
+## 👥 Group Endpoints
+
+_Da documentare_
+
+---
+
+## 🎯 Recommendation Endpoints
+
+_Da documentare_
