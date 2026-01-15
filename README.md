@@ -1,7 +1,7 @@
 <a id="top"></a>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Vittorio-Francesco-Ardente/GluGluPop_TPS_API/design/Logos/Asset_ReadMe.png" alt="GluGluPop Logo" width="400">
+  <img src="https://raw.githubusercontent.com/Vittorio-Francesco-Ardente/GluGluPop_TPS_API/design/Logos/Asset_ReadMe_HD.png" alt="GluGluPop Logo" width="400">
 </div>
 
 # 🎬 GluGluPop  
