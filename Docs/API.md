@@ -4,27 +4,35 @@
 
 API.md  
 ├── [Auth Endpoints](#-auth-endpoints)  
-│        ├── [POST /auth/register](#post-authregister)  
-│        ├── [POST /auth/login](#post-authlogin)  
-│        ├── [GET /auth/me](#get-authme)  
-│        ├── [PUT /auth/preferences](#put-authpreferences)  
-│        └── [PUT /auth/profile](#put-authprofile)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [POST /auth/register](#post-authregister)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [POST /auth/login](#post-authlogin)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /auth/me](#get-authme)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [PUT /auth/preferences](#put-authpreferences)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [PUT /auth/profile](#put-authprofile)  
 ├── [Movie Endpoints](#-movie-endpoints)  
-│        ├── [GET /movies/discover](#get-moviesdiscover)  
-│        ├── [GET /movies/trending](#get-moviestrending)  
-│        ├── [GET /movies/search](#get-moviessearch)  
-│        ├── [GET /movies/:id](#get-moviesid)  
-│        ├── [GET /movies/:id/trailer](#get-moviesidtrailer)  
-│        ├── [GET /movies/:id/similar](#get-moviesidsimilar)  
-│        └── [GET /movies/genres](#get-moviesgenres)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /movies/discover](#get-moviesdiscover)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /movies/trending](#get-moviestrending)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /movies/search](#get-moviessearch)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /movies/:id](#get-moviesid)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /movies/:id/trailer](#get-moviesidtrailer)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /movies/:id/similar](#get-moviesidsimilar)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [GET /movies/genres](#get-moviesgenres)  
 ├── [Swipe Endpoints](#-swipe-endpoints)  
-│        ├── [POST /swipes](#post-swipes)  
-│        ├── [GET /swipes/likes](#get-swipeslikes)  
-│        ├── [GET /swipes/history](#get-swipeshistory)  
-│        ├── [GET /swipes/seen-ids](#get-swipesseen-ids)  
-│        ├── [GET /swipes/stats](#get-swipesstats)  
-│        └── [DELETE /swipes/:movieId](#delete-swipesmovieid)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [POST /swipes](#post-swipes)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /swipes/likes](#get-swipeslikes)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /swipes/history](#get-swipeshistory)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /swipes/seen-ids](#get-swipesseen-ids)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /swipes/stats](#get-swipesstats)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [DELETE /swipes/:movieId](#delete-swipesmovieid)  
 ├── [Group Endpoints](#-group-endpoints)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [POST /groups](#post-groups)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [POST /groups/join](#post-groupsjoin)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /groups](#get-groups)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /groups/:id](#get-groupsid)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [POST /groups/:id/vote](#post-groupsidvote)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /groups/:id/matches](#get-groupsidmatches)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [DELETE /groups/:id/leave](#delete-groupsidleave)  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [DELETE /groups/:id](#delete-groupsid)  
 └── [Recommendation Endpoints](#-recommendation-endpoints)  
 
 ---
@@ -794,7 +802,362 @@ curl -X DELETE "http://localhost:5000/api/swipes/603" \
 
 ## 👥 Group Endpoints
 
-_Da documentare_
+> Tutti gli endpoint group richiedono autenticazione JWT.
+
+### POST /groups
+
+Crea un nuovo gruppo.
+
+**Body Parameters:**
+- `name` (string, required) - Nome del gruppo (max 50 caratteri)
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "message": "Gruppo creato! 🎉",
+  "data": {
+    "group": {
+      "id": 1,
+      "name": "Film Friday",
+      "code": "A3F5B2",
+      "status": "active"
+    }
+  }
+}
+```
+
+**Note:**
+- Il creatore viene automaticamente aggiunto come membro
+- Viene generato un codice univoco a 6 caratteri per inviti
+- Il gruppo scade dopo 24 ore dalla creazione
+- Status: "active", "voting", "completed"
+
+**Esempio cURL:**
+```bash
+curl -X POST "http://localhost:5000/api/groups" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Film Friday"
+  }'
+```
+
+---
+
+### POST /groups/join
+
+Unisciti a un gruppo tramite codice.
+
+**Body Parameters:**
+- `code` (string, required) - Codice gruppo a 6 caratteri
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "message": "Ti sei unito al gruppo! 🎬",
+  "data": {
+    "group": {
+      "id": 1,
+      "name": "Film Friday",
+      "code": "A3F5B2",
+      "status": "active",
+      "creatorId": 5,
+      "expiresAt": "2024-01-16T10:30:00.000Z",
+      "members": [
+        {
+          "id": 5,
+          "username": "creator",
+          "avatar": null
+        },
+        {
+          "id": 1,
+          "username": "newmember",
+          "avatar": null
+        }
+      ]
+    }
+  }
+}
+```
+
+**Errori:**
+- `404` - Gruppo non trovato o scaduto
+- `400` - Già membro del gruppo
+- `400` - Gruppo pieno (max 8 membri)
+
+**Esempio cURL:**
+```bash
+curl -X POST "http://localhost:5000/api/groups/join" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "A3F5B2"
+  }'
+```
+
+---
+
+### GET /groups
+
+Ottieni tutti i tuoi gruppi.
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "groups": [
+      {
+        "id": 1,
+        "name": "Film Friday",
+        "code": "A3F5B2",
+        "status": "active",
+        "creatorId": 5,
+        "expiresAt": "2024-01-16T10:30:00.000Z",
+        "members": [
+          {
+            "id": 5,
+            "username": "creator",
+            "avatar": null
+          },
+          {
+            "id": 1,
+            "username": "member1",
+            "avatar": null
+          }
+        ],
+        "creator": {
+          "id": 5,
+          "username": "creator"
+        }
+      }
+    ]
+  }
+}
+```
+
+**Note:**
+- Mostra solo gruppi attivi o in votazione (non "completed")
+- Include tutti i membri e il creatore
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/groups" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+---
+
+### GET /groups/:id
+
+Ottieni dettagli di un gruppo specifico.
+
+**Parametri URL:**
+- `id` (number, required) - ID del gruppo
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "group": {
+      "id": 1,
+      "name": "Film Friday",
+      "code": "A3F5B2",
+      "status": "active",
+      "creatorId": 5,
+      "expiresAt": "2024-01-16T10:30:00.000Z",
+      "members": [
+        {
+          "id": 5,
+          "username": "creator",
+          "avatar": null
+        },
+        {
+          "id": 1,
+          "username": "member1",
+          "avatar": null
+        }
+      ],
+      "creator": {
+        "id": 5,
+        "username": "creator",
+        "avatar": null
+      }
+    }
+  }
+}
+```
+
+**Errori:**
+- `404` - Gruppo non trovato
+- `403` - Non sei membro di questo gruppo
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/groups/1" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+---
+
+### POST /groups/:id/vote
+
+Vota un film nel gruppo.
+
+**Parametri URL:**
+- `id` (number, required) - ID del gruppo
+
+**Body Parameters:**
+- `movieId` (number, required) - ID del film su TMDB
+- `movieTitle` (string, required) - Titolo del film
+- `moviePoster` (string, optional) - URL poster del film
+- `vote` (string, required) - Voto: "like" o "skip"
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "message": "🎉 MATCH! Tutti hanno messo like!",
+  "data": {
+    "isMatch": true,
+    "votesCount": 3,
+    "totalMembers": 3,
+    "votes": [
+      { "userId": 1, "vote": "like" },
+      { "userId": 2, "vote": "like" },
+      { "userId": 3, "vote": "like" }
+    ]
+  }
+}
+```
+
+**Note:**
+- Se il voto esiste già per questo film, viene aggiornato
+- `isMatch`: true se tutti i membri hanno votato "like"
+- Message varia: "🎉 MATCH!" se tutti like, "Voto registrato! ✅" altrimenti
+
+**Errori:**
+- `404` - Gruppo non trovato
+- `403` - Non sei membro di questo gruppo
+
+**Esempio cURL:**
+```bash
+curl -X POST "http://localhost:5000/api/groups/1/vote" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "movieId": 603,
+    "movieTitle": "Matrix",
+    "moviePoster": "https://image.tmdb.org/t/p/w500/...",
+    "vote": "like"
+  }'
+```
+
+---
+
+### GET /groups/:id/matches
+
+Ottieni tutti i match del gruppo.
+
+**Parametri URL:**
+- `id` (number, required) - ID del gruppo
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "matches": [
+      {
+        "movieId": 603,
+        "movieTitle": "Matrix",
+        "moviePoster": "https://image.tmdb.org/t/p/w500/..."
+      },
+      {
+        "movieId": 550,
+        "movieTitle": "Fight Club",
+        "moviePoster": "https://image.tmdb.org/t/p/w500/..."
+      }
+    ],
+    "totalMembers": 3
+  }
+}
+```
+
+**Note:**
+- Un match è un film dove tutti i membri hanno votato "like"
+- Utile per vedere la lista finale dei film da guardare insieme
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/groups/1/matches" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+---
+
+### DELETE /groups/:id/leave
+
+Esci da un gruppo.
+
+**Parametri URL:**
+- `id` (number, required) - ID del gruppo
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "message": "Hai lasciato il gruppo 👋"
+}
+```
+
+**Errori:**
+- `404` - Gruppo non trovato
+- `400` - Il creatore non può abbandonare il gruppo
+
+**Note:**
+- Il creatore non può lasciare il gruppo, deve eliminarlo
+- Vengono rimossi anche tutti i voti dell'utente
+
+**Esempio cURL:**
+```bash
+curl -X DELETE "http://localhost:5000/api/groups/1/leave" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+---
+
+### DELETE /groups/:id
+
+Elimina un gruppo (solo creatore).
+
+**Parametri URL:**
+- `id` (number, required) - ID del gruppo
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "message": "Gruppo eliminato! 🗑️"
+}
+```
+
+**Errori:**
+- `404` - Gruppo non trovato
+- `403` - Solo il creatore può eliminare il gruppo
+
+**Note:**
+- Elimina tutto: membri, voti e il gruppo stesso
+- Azione irreversibile
+
+**Esempio cURL:**
+```bash
+curl -X DELETE "http://localhost:5000/api/groups/1" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
 
 ---
 
