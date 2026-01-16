@@ -34,6 +34,9 @@ API.md
 │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [DELETE /groups/:id/leave](#delete-groupsidleave)  
 │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [DELETE /groups/:id](#delete-groupsid)  
 └── [Recommendation Endpoints](#-recommendation-endpoints)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /recommendations/profile](#get-recommendationsprofile)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [GET /recommendations/similar](#get-recommendationssimilar)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [GET /recommendations/genres](#get-recommendationsgenres)  
 
 ---
 
@@ -1163,4 +1166,122 @@ curl -X DELETE "http://localhost:5000/api/groups/1" \
 
 ## 🎯 Recommendation Endpoints
 
-_Da documentare_
+> Tutti gli endpoint recommendation richiedono autenticazione JWT.
+
+### GET /recommendations/profile
+
+Ottieni il profilo di raccomandazione dell'utente.
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "favoriteGenres": [
+      { "genreId": 28, "count": 18 },
+      { "genreId": 878, "count": 15 },
+      { "genreId": 35, "count": 12 },
+      { "genreId": 27, "count": 8 },
+      { "genreId": 53, "count": 6 }
+    ],
+    "seenMovieIds": [603, 550, 624, 155, 13],
+    "stats": {
+      "totalLikes": 42,
+      "totalSwipes": 57,
+      "likeRate": "73.7%"
+    }
+  }
+}
+```
+
+**Utilizzo:**
+- `favoriteGenres`: Top 5 generi più apprezzati (basato su like/superlike)
+- `seenMovieIds`: Array di ID film già visti per evitare duplicati
+- `stats`: Statistiche generali sull'attività dell'utente
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/recommendations/profile" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+---
+
+### GET /recommendations/similar
+
+Ottieni dati per film simili ai tuoi like.
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "recentLikedMovies": [
+      { "movieId": 603, "movieTitle": "Matrix" },
+      { "movieId": 550, "movieTitle": "Fight Club" },
+      { "movieId": 155, "movieTitle": "The Dark Knight" }
+    ]
+  }
+}
+```
+
+**Note:**
+- Ritorna gli ultimi 10 film con like/superlike
+- Usa questi ID per chiamare TMDb `/movie/{id}/similar`
+- Utile per costruire feed personalizzati
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/recommendations/similar" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+**Utilizzo frontend:**
+```javascript
+// Per ogni film ritornato, chiama TMDb similar
+const movies = data.recentLikedMovies;
+for (const movie of movies) {
+  // GET /api/movies/${movie.movieId}/similar
+}
+```
+
+---
+
+### GET /recommendations/genres
+
+Suggerimenti basati sui generi preferiti.
+
+**Risposta:**
+```json
+{
+  "success": true,
+  "data": {
+    "recommendedGenreIds": [28, 878, 35],
+    "excludeMovieIds": [603, 550, 624, 155, 13],
+    "message": "Usa questi generi per chiamare TMDb /discover/movie"
+  }
+}
+```
+
+**Utilizzo:**
+- `recommendedGenreIds`: Top 3 generi più apprezzati
+- `excludeMovieIds`: Film già visti da escludere
+- Usa per query TMDb `/discover/movie` con filtri genere
+
+**Esempio cURL:**
+```bash
+curl "http://localhost:5000/api/recommendations/genres" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+**Utilizzo frontend:**
+```javascript
+// Costruisci query TMDb discover
+const { recommendedGenreIds, excludeMovieIds } = data;
+const genreQuery = recommendedGenreIds.join(','); // "28,878,35"
+
+// GET /api/movies/discover?genre=${genreQuery}
+// Poi filtra lato client escludendo excludeMovieIds
+```
+
+---
