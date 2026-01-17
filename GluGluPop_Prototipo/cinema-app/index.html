@@ -6,33 +6,86 @@
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>GluGluPop — Cinema Experience</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+
+    <!-- ============================================
+         SPLASH SCREEN - Loading Iniziale
+         ============================================ -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <!-- Logo Container - Inserisci qui il tuo logo -->
+            <div class="splash-logo-container">
+                <!-- OPZIONE 1: Logo immagine (decommentare e inserire percorso) -->
+                <!-- <img src="logo.png" alt="Logo" class="splash-logo-img"> -->
+                
+                <!-- OPZIONE 2: Logo placeholder (rimuovere quando inserisci immagine) -->
+                <div class="splash-logo-placeholder">
+                    <div class="logo-icon-3d">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Brand Name -->
+            <h1 class="splash-brand">GluGluPop</h1>
+            <p class="splash-tagline">Cinema Experience</p>
+            
+            <!-- Loading Indicator -->
+            <div class="splash-loader">
+                <div class="loader-bar">
+                    <div class="loader-progress"></div>
+                </div>
+                <p class="loader-text">Caricamento...</p>
+            </div>
+        </div>
         
-        <!-- Header -->
+        <!-- Decorative Elements -->
+        <div class="splash-bg-gradient"></div>
+        <div class="splash-particles">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- ============================================
+         MAIN APP CONTAINER
+         ============================================ -->
+    <div id="appContainer" class="app-container hidden">
+        
+        <!-- ==================== HEADER ==================== -->
         <header class="header">
             <div class="header-content">
+                <!-- Logo -->
                 <div class="header-logo">
                     <div class="logo-icon">
+                        <!-- Inserisci qui il tuo logo piccolo -->
+                        <!-- <img src="logo-small.png" alt="Logo"> -->
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <polygon points="5 3 19 12 5 21 5 3"></polygon>
                         </svg>
                     </div>
                     <span class="logo-text">GluGluPop</span>
                 </div>
+                
+                <!-- Actions -->
                 <div class="header-actions">
-                    <button id="muteBtn" class="header-btn" title="Audio">
+                    <button id="muteBtn" class="header-btn tooltip" data-tooltip="Audio">
                         <svg id="muteIcon" viewBox="0 0 24 24">
                             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                         </svg>
                     </button>
-                    <button id="searchBtn" class="header-btn" title="Cerca">
+                    <button id="searchBtn" class="header-btn tooltip" data-tooltip="Cerca">
                         <svg viewBox="0 0 24 24">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -42,30 +95,35 @@
             </div>
         </header>
 
-        <!-- HOME PAGE -->
+        <!-- ==================== HOME PAGE ==================== -->
         <main id="homePage" class="page active">
             
             <!-- Loading State -->
             <div id="loadingState" class="loading-state">
-                <div class="spinner"></div>
-                <p>Caricamento film...</p>
+                <div class="spinner-3d"></div>
+                <p data-i18n="loading">Caricamento film...</p>
             </div>
 
             <!-- Error State -->
-            <div id="errorState" class="error-state" style="display: none;">
-                <svg viewBox="0 0 24 24" width="48" height="48">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <p id="errorText">Errore nel caricamento</p>
-                <button class="btn-primary" onclick="App.init()">Riprova</button>
+            <div id="errorState" class="error-state">
+                <div class="error-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                </div>
+                <p id="errorText" data-i18n="error">Errore nel caricamento</p>
+                <button class="btn-primary" onclick="App.init()">
+                    <span data-i18n="retry">Riprova</span>
+                </button>
             </div>
 
             <!-- Main Content -->
-            <div id="homeContent" style="display: none;">
-                <!-- Video Card -->
-                <div id="videoCard" class="video-card card-swipe">
+            <div id="homeContent" class="home-content">
+                
+                <!-- Video Card with 3D Effect -->
+                <div id="videoCard" class="video-card card-3d">
                     <div id="videoContainer" class="video-container"></div>
                     <div class="video-gradient"></div>
                     <div class="video-info">
@@ -76,23 +134,30 @@
                         <h2 id="filmTitle" class="film-title">-</h2>
                         <p id="filmMeta" class="film-meta">-</p>
                         <div class="film-actions-row">
-                            <div class="rating-badge">
+                            <div class="rating-badge glow">
                                 <svg viewBox="0 0 24 24">
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                 </svg>
                                 <span id="filmRating">-</span>
                             </div>
-                            <button id="detailsBtn" class="details-btn">
-                                <span>Dettagli</span>
+                            <button id="detailsBtn" class="details-btn glass">
+                                <span data-i18n="details">Dettagli</span>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="9 18 15 12 9 6"></polyline>
                                 </svg>
                             </button>
                         </div>
                     </div>
+                    <!-- Swipe Indicators -->
+                    <div class="swipe-indicator left">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </div>
+                    <div class="swipe-indicator right">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    </div>
                 </div>
                 
-                <!-- Actions -->
+                <!-- Action Buttons -->
                 <div class="action-buttons">
                     <button id="skipBtn" class="action-btn skip" title="Salta">
                         <svg viewBox="0 0 24 24">
@@ -100,7 +165,7 @@
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                     </button>
-                    <button id="saveBtn" class="action-btn" title="Salva">
+                    <button id="saveBtn" class="action-btn bookmark" title="Salva">
                         <svg viewBox="0 0 24 24">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
@@ -113,46 +178,55 @@
                 </div>
                 
                 <!-- Film Selector -->
-                <div class="section">
-                    <p class="section-title">In programmazione</p>
+                <section class="section">
+                    <h3 class="section-title" data-i18n="nowPlaying">In programmazione</h3>
                     <div id="filmList" class="film-list"></div>
-                </div>
+                </section>
 
                 <!-- Quick Stats -->
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <p class="stat-value" id="homeStatLiked">0</p>
-                        <p class="stat-label">Preferiti</p>
+                    <div class="stat-card glass-card">
+                        <p class="stat-value gradient-text" id="homeStatLiked">0</p>
+                        <p class="stat-label" data-i18n="favorites">Preferiti</p>
                     </div>
-                    <div class="stat-card">
-                        <p class="stat-value" id="homeStatWatchlist">0</p>
-                        <p class="stat-label">Da vedere</p>
+                    <div class="stat-card glass-card">
+                        <p class="stat-value gradient-text" id="homeStatWatchlist">0</p>
+                        <p class="stat-label" data-i18n="toWatch">Da vedere</p>
                     </div>
-                    <div class="stat-card">
-                        <p class="stat-value" id="homeStatSwiped">0</p>
-                        <p class="stat-label">Valutati</p>
+                    <div class="stat-card glass-card">
+                        <p class="stat-value gradient-text" id="homeStatSwiped">0</p>
+                        <p class="stat-label" data-i18n="rated">Valutati</p>
                     </div>
                 </div>
             </div>
         </main>
 
-        <!-- SALVATI PAGE -->
-        <div id="salvatiPage" class="page">
+        <!-- ==================== SALVATI PAGE ==================== -->
+        <section id="salvatiPage" class="page">
             <div class="page-header">
-                <h1>La tua libreria</h1>
-                <p class="text-secondary">Film salvati e preferiti</p>
+                <h1 data-i18n="yourLibrary">La tua libreria</h1>
+                <p class="text-secondary" data-i18n="savedMovies">Film salvati e preferiti</p>
+            </div>
+            
+            <!-- Search in Saved -->
+            <div class="search-bar-inline">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="savedSearchInput" class="input-field" data-i18n-placeholder="searchSaved" placeholder="Cerca nei tuoi film...">
             </div>
             
             <div class="tabs">
-                <button class="tab-btn active" data-tab="liked">Preferiti</button>
-                <button class="tab-btn" data-tab="watchlist">Da vedere</button>
+                <button class="tab-btn active" data-tab="liked" data-i18n="favorites">Preferiti</button>
+                <button class="tab-btn" data-tab="watchlist" data-i18n="toWatch">Da vedere</button>
             </div>
             
             <div id="likedList" class="films-list"></div>
-            <div id="watchlistList" class="films-list" style="display: none;"></div>
+            <div id="watchlistList" class="films-list hidden"></div>
             
             <div id="emptyState" class="empty-state">
-                <div class="empty-icon">
+                <div class="empty-icon glass-card">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
                         <line x1="7" y1="2" x2="7" y2="22"></line>
@@ -160,106 +234,131 @@
                         <line x1="2" y1="12" x2="22" y2="12"></line>
                     </svg>
                 </div>
-                <p class="empty-title">Nessun film salvato</p>
-                <p class="empty-description">Esplora il catalogo e salva i tuoi preferiti</p>
-                <button class="btn-primary" onclick="App.switchPage('home')">Esplora film</button>
+                <p class="empty-title" data-i18n="noSavedMovies">Nessun film salvato</p>
+                <p class="empty-description" data-i18n="exploreAndSave">Esplora il catalogo e salva i tuoi preferiti</p>
+                <button class="btn-primary" onclick="App.switchPage('home')">
+                    <span data-i18n="exploreMovies">Esplora film</span>
+                </button>
             </div>
-        </div>
+        </section>
 
-        <!-- GRUPPI PAGE -->
-        <div id="gruppiPage" class="page">
+        <!-- ==================== GRUPPI PAGE ==================== -->
+        <section id="gruppiPage" class="page">
             <div class="page-header-row">
                 <div>
-                    <h1>Gruppi</h1>
-                    <p class="text-secondary">Scegli cosa guardare insieme</p>
+                    <h1 data-i18n="groups">Gruppi</h1>
+                    <p class="text-secondary" data-i18n="chooseTogetherDesc">Scegli cosa guardare insieme</p>
                 </div>
                 <button id="newGroupBtn" class="btn-primary btn-icon">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    Nuovo
+                    <span data-i18n="new">Nuovo</span>
                 </button>
             </div>
 
             <div class="section">
-                <p class="section-title">Come funziona</p>
+                <h3 class="section-title" data-i18n="howItWorks">Come funziona</h3>
                 <div class="guide-steps">
-                    <div class="guide-step">
+                    <div class="guide-step glass-card">
                         <div class="guide-number">1</div>
                         <div class="guide-content">
-                            <h4>Crea un gruppo</h4>
-                            <p>Dai un nome al tuo gruppo e aggiungi una descrizione.</p>
+                            <h4 data-i18n="createGroup">Crea un gruppo</h4>
+                            <p data-i18n="createGroupDesc">Dai un nome al tuo gruppo e aggiungi una descrizione.</p>
                         </div>
                     </div>
-                    <div class="guide-step">
+                    <div class="guide-step glass-card">
                         <div class="guide-number">2</div>
                         <div class="guide-content">
-                            <h4>Invita i tuoi amici</h4>
-                            <p>Aggiungi membri inserendo le loro email.</p>
+                            <h4 data-i18n="inviteFriends">Invita i tuoi amici</h4>
+                            <p data-i18n="inviteFriendsDesc">Aggiungi membri inserendo le loro email.</p>
                         </div>
                     </div>
-                    <div class="guide-step">
+                    <div class="guide-step glass-card">
                         <div class="guide-number">3</div>
                         <div class="guide-content">
-                            <h4>Proponi i film</h4>
-                            <p>Ogni membro può proporre film dal catalogo.</p>
+                            <h4 data-i18n="proposeMovies">Proponi i film</h4>
+                            <p data-i18n="proposeMoviesDesc">Ogni membro può proporre film dal catalogo.</p>
                         </div>
                     </div>
-                    <div class="guide-step">
+                    <div class="guide-step glass-card">
                         <div class="guide-number">4</div>
                         <div class="guide-content">
-                            <h4>Decidete insieme</h4>
-                            <p>Votate i film e scoprite i match perfetti!</p>
+                            <h4 data-i18n="decideTogether">Decidete insieme</h4>
+                            <p data-i18n="decideTogetherDesc">Votate i film e scoprite i match perfetti!</p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <p class="section-title">I tuoi gruppi</p>
+            <h3 class="section-title" data-i18n="yourGroups">I tuoi gruppi</h3>
             <div id="groupsList"></div>
             
             <div id="noGroups" class="no-groups">
-                <p>Non hai ancora creato nessun gruppo</p>
-                <button id="createFirstGroup" class="btn-outline">Crea il tuo primo gruppo</button>
+                <p data-i18n="noGroupsYet">Non hai ancora creato nessun gruppo</p>
+                <button id="createFirstGroup" class="btn-outline">
+                    <span data-i18n="createFirstGroup">Crea il tuo primo gruppo</span>
+                </button>
             </div>
-        </div>
+        </section>
 
-        <!-- PROFILO PAGE -->
-        <div id="profiloPage" class="page">
+        <!-- ==================== PROFILO PAGE ==================== -->
+        <section id="profiloPage" class="page">
             <div class="profile-header">
-                <div class="profile-avatar">
-                    <span>MR</span>
+                <div class="profile-avatar glass-card">
+                    <span id="profileInitials">MR</span>
                 </div>
                 <div class="profile-info">
-                    <h1>Mario Rossi</h1>
-                    <p class="text-muted">mario.rossi@email.com</p>
-                    <p class="text-secondary text-sm">Membro dal Gennaio 2024</p>
+                    <h1 id="profileName">Mario Rossi</h1>
+                    <p class="text-muted" id="profileEmail">mario.rossi@email.com</p>
+                    <p class="text-secondary text-sm" data-i18n="memberSince">Membro dal Gennaio 2024</p>
                 </div>
+                <button id="editProfileBtn" class="btn-icon-small">
+                    <svg viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                </button>
             </div>
             
+            <!-- Stats -->
             <div class="stats-grid">
-                <div class="stat-card">
-                    <p class="stat-value" id="statLiked">0</p>
-                    <p class="stat-label">Preferiti</p>
+                <div class="stat-card glass-card">
+                    <p class="stat-value gradient-text" id="statLiked">0</p>
+                    <p class="stat-label" data-i18n="favorites">Preferiti</p>
                 </div>
-                <div class="stat-card">
-                    <p class="stat-value" id="statWatchlist">0</p>
-                    <p class="stat-label">Da vedere</p>
+                <div class="stat-card glass-card">
+                    <p class="stat-value gradient-text" id="statWatchlist">0</p>
+                    <p class="stat-label" data-i18n="toWatch">Da vedere</p>
                 </div>
-                <div class="stat-card">
-                    <p class="stat-value" id="statSwiped">0</p>
-                    <p class="stat-label">Valutati</p>
+                <div class="stat-card glass-card">
+                    <p class="stat-value gradient-text" id="statSwiped">0</p>
+                    <p class="stat-label" data-i18n="rated">Valutati</p>
                 </div>
             </div>
             
-            <div class="card preferences-card">
-                <h3>I tuoi generi preferiti</h3>
+            <!-- Genre Preferences -->
+            <div class="card preferences-card glass-card">
+                <h3 data-i18n="favoriteGenres">I tuoi generi preferiti</h3>
                 <div id="genreStats" class="preferences-list"></div>
             </div>
             
-            <p class="section-title">Impostazioni</p>
+            <!-- Settings -->
+            <h3 class="section-title" data-i18n="settings">Impostazioni</h3>
             <div class="settings-list">
+                <!-- Language -->
+                <div class="menu-item" id="languageMenuItem">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span class="menu-label" data-i18n="language">Lingua</span>
+                    <select id="languageSelect" class="select-minimal">
+                        <option value="it">🇮🇹 Italiano</option>
+                        <option value="en">🇬🇧 English</option>
+                    </select>
+                </div>
+                
+                <!-- Theme -->
                 <div class="menu-item" id="themeMenuItem">
                     <svg viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -272,63 +371,80 @@
                         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
-                    <span class="menu-label">Tema scuro</span>
+                    <span class="menu-label" data-i18n="darkTheme">Tema scuro</span>
                     <div id="themeToggle" class="toggle-switch active"></div>
                 </div>
-                <div class="menu-item">
+                
+                <!-- Notifications -->
+                <div class="menu-item" id="notificationsMenuItem">
                     <svg viewBox="0 0 24 24">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                         <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
-                    <span class="menu-label">Notifiche</span>
-                    <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="menu-label" data-i18n="notifications">Notifiche</span>
+                    <div id="notificationsToggle" class="toggle-switch"></div>
                 </div>
-                <div class="menu-item">
+                
+                <!-- Privacy -->
+                <div class="menu-item clickable" id="privacyMenuItem">
                     <svg viewBox="0 0 24 24">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                     </svg>
-                    <span class="menu-label">Privacy e sicurezza</span>
+                    <span class="menu-label" data-i18n="privacy">Privacy e sicurezza</span>
                     <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
-                <div class="menu-item">
+                
+                <!-- Help -->
+                <div class="menu-item clickable" id="helpMenuItem">
                     <svg viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                         <line x1="12" y1="17" x2="12.01" y2="17"></line>
                     </svg>
-                    <span class="menu-label">Centro assistenza</span>
+                    <span class="menu-label" data-i18n="helpCenter">Centro assistenza</span>
+                    <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                
+                <!-- Clear Data -->
+                <div class="menu-item clickable danger" id="clearDataMenuItem">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span class="menu-label" data-i18n="clearData">Cancella dati</span>
                     <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
             </div>
             
-            <button class="btn-secondary full-width logout-btn">
+            <!-- Logout -->
+            <button class="btn-secondary full-width logout-btn" id="logoutBtn">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
                     <line x1="21" y1="12" x2="9" y2="12"></line>
                 </svg>
-                Esci dall'account
+                <span data-i18n="logout">Esci dall'account</span>
             </button>
 
-            <p class="version-text">GluGluPop v1.0.0</p>
-        </div>
+            <p class="version-text">GluGluPop v2.0.0</p>
+        </section>
 
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
+        <!-- ==================== BOTTOM NAVIGATION ==================== -->
+        <nav class="bottom-nav glass">
             <div class="nav-content">
                 <button class="nav-item active" data-page="home">
                     <svg viewBox="0 0 24 24">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                         <polyline points="9 22 9 12 15 12 15 22"></polyline>
                     </svg>
-                    <span>Home</span>
+                    <span data-i18n="home">Home</span>
                 </button>
                 <button class="nav-item" data-page="salvati">
                     <svg viewBox="0 0 24 24">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                     </svg>
-                    <span>Salvati</span>
+                    <span data-i18n="saved">Salvati</span>
                 </button>
                 <button class="nav-item" data-page="gruppi">
                     <svg viewBox="0 0 24 24">
@@ -337,21 +453,23 @@
                         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
-                    <span>Gruppi</span>
+                    <span data-i18n="groups">Gruppi</span>
                 </button>
                 <button class="nav-item" data-page="profilo">
                     <svg viewBox="0 0 24 24">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <span>Profilo</span>
+                    <span data-i18n="profile">Profilo</span>
                 </button>
             </div>
         </nav>
 
-        <!-- Overlay -->
+        <!-- ==================== OVERLAY ==================== -->
         <div id="overlay" class="overlay"></div>
 
+        <!-- ==================== BOTTOM SHEETS ==================== -->
+        
         <!-- Film Details Sheet -->
         <div id="detailsSheet" class="bottom-sheet">
             <div class="sheet-handle"><div class="handle-bar"></div></div>
@@ -362,20 +480,22 @@
         <div id="groupSheet" class="bottom-sheet">
             <div class="sheet-handle"><div class="handle-bar"></div></div>
             <div class="sheet-content">
-                <h2>Crea nuovo gruppo</h2>
+                <h2 data-i18n="createNewGroup">Crea nuovo gruppo</h2>
                 <div class="form-group">
-                    <label>Nome del gruppo *</label>
-                    <input type="text" id="groupNameInput" class="input-field" placeholder="Es. Serata cinema">
+                    <label data-i18n="groupName">Nome del gruppo *</label>
+                    <input type="text" id="groupNameInput" class="input-field" data-i18n-placeholder="groupNamePlaceholder" placeholder="Es. Serata cinema">
                 </div>
                 <div class="form-group">
-                    <label>Descrizione</label>
-                    <input type="text" id="groupDescInput" class="input-field" placeholder="Una breve descrizione (opzionale)">
+                    <label data-i18n="description">Descrizione</label>
+                    <input type="text" id="groupDescInput" class="input-field" data-i18n-placeholder="descriptionPlaceholder" placeholder="Una breve descrizione (opzionale)">
                 </div>
                 <div class="form-group">
-                    <label>Invita un amico (email)</label>
+                    <label data-i18n="inviteFriend">Invita un amico (email)</label>
                     <input type="email" id="groupEmailInput" class="input-field" placeholder="amico@email.com">
                 </div>
-                <button id="confirmGroupBtn" class="btn-primary full-width">Crea gruppo</button>
+                <button id="confirmGroupBtn" class="btn-primary full-width">
+                    <span data-i18n="createGroup">Crea gruppo</span>
+                </button>
             </div>
         </div>
 
@@ -394,20 +514,112 @@
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" id="searchInput" class="input-field" placeholder="Cerca film, regista, genere...">
+                    <input type="text" id="searchInput" class="input-field" data-i18n-placeholder="searchPlaceholder" placeholder="Cerca film, regista, genere...">
+                    <button id="clearSearchBtn" class="clear-search-btn hidden">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
                 </div>
             </div>
             <div id="searchResults" class="sheet-content">
-                <p class="search-hint">Cerca per titolo, regista o genere</p>
+                <p class="search-hint" data-i18n="searchHint">Cerca per titolo, regista o genere</p>
             </div>
         </div>
 
-        <!-- Toast -->
+        <!-- Edit Profile Sheet -->
+        <div id="editProfileSheet" class="bottom-sheet">
+            <div class="sheet-handle"><div class="handle-bar"></div></div>
+            <div class="sheet-content">
+                <h2 data-i18n="editProfile">Modifica profilo</h2>
+                <div class="form-group">
+                    <label data-i18n="name">Nome</label>
+                    <input type="text" id="editNameInput" class="input-field" placeholder="Il tuo nome">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="editEmailInput" class="input-field" placeholder="La tua email">
+                </div>
+                <button id="saveProfileBtn" class="btn-primary full-width">
+                    <span data-i18n="save">Salva</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Privacy Sheet -->
+        <div id="privacySheet" class="bottom-sheet">
+            <div class="sheet-handle"><div class="handle-bar"></div></div>
+            <div class="sheet-content">
+                <h2 data-i18n="privacy">Privacy e sicurezza</h2>
+                <div class="info-card glass-card">
+                    <h4>🔒 I tuoi dati sono al sicuro</h4>
+                    <p>Tutti i tuoi dati sono salvati localmente sul tuo dispositivo. Non condividiamo nessuna informazione con terze parti.</p>
+                </div>
+                <div class="settings-list" style="margin-top: 20px;">
+                    <div class="menu-item">
+                        <span class="menu-label" data-i18n="shareActivity">Condividi attività</span>
+                        <div id="shareActivityToggle" class="toggle-switch"></div>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-label" data-i18n="showProfile">Mostra profilo pubblico</span>
+                        <div id="publicProfileToggle" class="toggle-switch"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Sheet -->
+        <div id="helpSheet" class="bottom-sheet">
+            <div class="sheet-handle"><div class="handle-bar"></div></div>
+            <div class="sheet-content">
+                <h2 data-i18n="helpCenter">Centro assistenza</h2>
+                <div class="faq-list">
+                    <div class="faq-item glass-card">
+                        <h4>Come funziona lo swipe?</h4>
+                        <p>Scorri a destra per aggiungere un film ai preferiti, a sinistra per saltarlo.</p>
+                    </div>
+                    <div class="faq-item glass-card">
+                        <h4>Come creo un gruppo?</h4>
+                        <p>Vai nella sezione Gruppi e clicca su "Nuovo" per creare un gruppo e invitare amici.</p>
+                    </div>
+                    <div class="faq-item glass-card">
+                        <h4>Dove trovo i film salvati?</h4>
+                        <p>Tutti i film che hai salvato sono nella sezione "Salvati" accessibile dal menu in basso.</p>
+                    </div>
+                    <div class="faq-item glass-card">
+                        <h4>Come cambio la lingua?</h4>
+                        <p>Vai nel tuo Profilo > Impostazioni > Lingua e seleziona la lingua desiderata.</p>
+                    </div>
+                </div>
+                <div class="contact-support">
+                    <p data-i18n="needHelp">Hai bisogno di altro aiuto?</p>
+                    <button class="btn-outline full-width">
+                        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span data-i18n="contactUs">Contattaci</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TOAST ==================== -->
         <div id="toast" class="toast">
+            <span id="toastIcon" class="toast-icon"></span>
             <span id="toastText"></span>
         </div>
+
+        <!-- ==================== CONFIRM DIALOG ==================== -->
+        <div id="confirmDialog" class="confirm-dialog">
+            <div class="confirm-content glass-card">
+                <h3 id="confirmTitle">Conferma</h3>
+                <p id="confirmMessage">Sei sicuro?</p>
+                <div class="confirm-actions">
+                    <button id="confirmCancel" class="btn-secondary">Annulla</button>
+                    <button id="confirmOk" class="btn-primary danger">Conferma</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <!-- Scripts -->
     <script src="app.js"></script>
 </body>
 </html>
