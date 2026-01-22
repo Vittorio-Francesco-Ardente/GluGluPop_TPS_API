@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>GluGluPop — Cinema Experience</title>
     
     <!-- Fonts -->
@@ -18,7 +19,7 @@
 <body>
 
     <!-- ============================================
-         SPLASH SCREEN - Loading Iniziale
+         SPLASH SCREEN - Premium Loading
          ============================================ -->
     <div id="splashScreen" class="splash-screen">
         <div class="splash-content">
@@ -27,7 +28,7 @@
                 <!-- OPZIONE 1: Logo immagine (decommentare e inserire percorso) -->
                 <!-- <img src="logo.png" alt="Logo" class="splash-logo-img"> -->
                 
-                <!-- OPZIONE 2: Logo placeholder (rimuovere quando inserisci immagine) -->
+                <!-- OPZIONE 2: Logo placeholder animato 3D -->
                 <div class="splash-logo-placeholder">
                     <div class="logo-icon-3d">
                         <svg viewBox="0 0 24 24" fill="currentColor">
@@ -50,7 +51,7 @@
             </div>
         </div>
         
-        <!-- Decorative Elements -->
+        <!-- Decorative Background -->
         <div class="splash-bg-gradient"></div>
         <div class="splash-particles">
             <span></span><span></span><span></span><span></span><span></span>
@@ -121,11 +122,14 @@
 
             <!-- Main Content -->
             <div id="homeContent" class="home-content">
+            
                 
-                <!-- Video Card with 3D Effect -->
-                <div id="videoCard" class="video-card card-3d">
-                    <div id="videoContainer" class="video-container"></div>
-                    <div class="video-gradient"></div>
+                <!-- Video Card with 3D Effect and Ambient Light -->
+                <div class="video-card-wrapper">
+                    <div id="ambientLight" class="ambient-light"></div>
+                    <div id="videoCard" class="video-card card-3d">
+                        <div id="videoContainer" class="video-container"></div>
+                   
                     <div class="video-info">
                         <div class="film-tags">
                             <span id="filmGenre" class="film-tag">-</span>
@@ -156,6 +160,7 @@
                         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </div>
                 </div>
+                </div><!-- Close video-card-wrapper -->
                 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
@@ -183,21 +188,6 @@
                     <div id="filmList" class="film-list"></div>
                 </section>
 
-                <!-- Quick Stats -->
-                <div class="stats-grid">
-                    <div class="stat-card glass-card">
-                        <p class="stat-value gradient-text" id="homeStatLiked">0</p>
-                        <p class="stat-label" data-i18n="favorites">Preferiti</p>
-                    </div>
-                    <div class="stat-card glass-card">
-                        <p class="stat-value gradient-text" id="homeStatWatchlist">0</p>
-                        <p class="stat-label" data-i18n="toWatch">Da vedere</p>
-                    </div>
-                    <div class="stat-card glass-card">
-                        <p class="stat-value gradient-text" id="homeStatSwiped">0</p>
-                        <p class="stat-label" data-i18n="rated">Valutati</p>
-                    </div>
-                </div>
             </div>
         </main>
 
@@ -215,6 +205,20 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
                 <input type="text" id="savedSearchInput" class="input-field" data-i18n-placeholder="searchSaved" placeholder="Cerca nei tuoi film...">
+                <button id="clearSavedSearchBtn" class="clear-search-btn hidden">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <!-- Sort Options -->
+            <div class="sort-options">
+                <span class="sort-label" data-i18n="sortBy">Ordina per:</span>
+                <select id="savedSortSelect" class="sort-select">
+                    <option value="recent" data-i18n="mostRecent">Più recenti</option>
+                    <option value="title" data-i18n="titleAZ">Titolo A-Z</option>
+                    <option value="rating" data-i18n="highestRating">Valutazione</option>
+                    <option value="year" data-i18n="newestFirst">Anno</option>
+                </select>
             </div>
             
             <div class="tabs">
@@ -291,7 +295,7 @@
                     </div>
                 </div>
             </div>
-            
+            <br>
             <h3 class="section-title" data-i18n="yourGroups">I tuoi gruppi</h3>
             <div id="groupsList"></div>
             
@@ -306,26 +310,37 @@
         <!-- ==================== PROFILO PAGE ==================== -->
         <section id="profiloPage" class="page">
             <div class="profile-header">
-                <div class="profile-avatar glass-card">
-                    <span id="profileInitials">MR</span>
+                <div class="profile-avatar-wrapper">
+                    <div class="profile-avatar glass-card" id="profileAvatarBtn">
+                        <span id="profileInitials">MR</span>
+                        <div class="avatar-edit-overlay">
+                        </div>
+                    </div>
+                    <div class="profile-status online"></div>
                 </div>
                 <div class="profile-info">
                     <h1 id="profileName">Mario Rossi</h1>
                     <p class="text-muted" id="profileEmail">mario.rossi@email.com</p>
-                    <p class="text-secondary text-sm" data-i18n="memberSince">Membro dal Gennaio 2024</p>
+                    <div class="profile-badges">
+                        <span class="profile-badge" id="memberBadge">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                                
+                            </svg>
+                        </span>
+                    </div>
                 </div>
-                <button id="editProfileBtn" class="btn-icon-small">
+                <button id="editProfileBtn" class="btn-icon-small" title="Modifica profilo">
                     <svg viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                 </button>
             </div>
             
             <!-- Stats -->
             <div class="stats-grid">
-                <div class="stat-card glass-card">
+                <div class="stat-card glass-card clickable" onclick="App.switchPage('salvati')">
                     <p class="stat-value gradient-text" id="statLiked">0</p>
                     <p class="stat-label" data-i18n="favorites">Preferiti</p>
                 </div>
-                <div class="stat-card glass-card">
+                <div class="stat-card glass-card clickable" onclick="App.goToWatchlist()">
                     <p class="stat-value gradient-text" id="statWatchlist">0</p>
                     <p class="stat-label" data-i18n="toWatch">Da vedere</p>
                 </div>
@@ -334,16 +349,263 @@
                     <p class="stat-label" data-i18n="rated">Valutati</p>
                 </div>
             </div>
+
+            <br>
             
             <!-- Genre Preferences -->
             <div class="card preferences-card glass-card">
-                <h3 data-i18n="favoriteGenres">I tuoi generi preferiti</h3>
+                <div class="preferences-header">
+                    <h3 data-i18n="favoriteGenres">I tuoi generi preferiti</h3>
+                    <div class="preferences-chart" id="genreChart"></div>
+                </div>
                 <div id="genreStats" class="preferences-list"></div>
             </div>
-            
+
+            <!-- Achievements -->
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" data-i18n="achievements">Traguardi</h3>
+                    <span class="achievements-counter" id="achievementsCounter">0/12</span>
+                </div>
+                <div class="achievements-grid" id="achievementsGrid">
+                    <!-- Getting Started -->
+                    <div class="achievement-card glass-card locked" data-achievement="first-swipe">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="12" y1="18" x2="12" y2="12"></line>
+                                <line x1="9" y1="15" x2="15" y2="15"></line>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Primo Swipe</p>
+                            <p class="achievement-desc">Valuta il tuo primo film</p>
+                        </div>
+                        <div class="achievement-status">
+                            <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card glass-card locked" data-achievement="first-like">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Primo Amore</p>
+                            <p class="achievement-desc">Salva il tuo primo film</p>
+                        </div>
+                        <div class="achievement-status">
+                            <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card glass-card locked" data-achievement="first-watchlist">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Lista Desideri</p>
+                            <p class="achievement-desc">Aggiungi alla watchlist</p>
+                        </div>
+                        <div class="achievement-status">
+                            <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Explorer Achievements -->
+                    <div class="achievement-card glass-card locked has-progress" data-achievement="explorer-10">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Esploratore</p>
+                            <p class="achievement-desc">Valuta 10 film</p>
+                            <div class="achievement-progress">
+                                <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-explorer-10"></div></div>
+                                <span class="progress-text" id="text-explorer-10">0/10</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card glass-card locked has-progress" data-achievement="explorer-50">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Critico</p>
+                            <p class="achievement-desc">Valuta 50 film</p>
+                            <div class="achievement-progress">
+                                <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-explorer-50"></div></div>
+                                <span class="progress-text" id="text-explorer-50">0/50</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card glass-card locked has-progress" data-achievement="explorer-100">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="8" r="7"></circle>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Cinefilo Pro</p>
+                            <p class="achievement-desc">Valuta 100 film</p>
+                            <div class="achievement-progress">
+                                <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-explorer-100"></div></div>
+                                <span class="progress-text" id="text-explorer-100">0/100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collector Achievements -->
+                    <div class="achievement-card glass-card locked has-progress" data-achievement="collector-10">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Collezionista</p>
+                            <p class="achievement-desc">Salva 10 film</p>
+                            <div class="achievement-progress">
+                                <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-collector-10"></div></div>
+                                <span class="progress-text" id="text-collector-10">0/10</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card glass-card locked has-progress" data-achievement="collector-25">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Archivista</p>
+                            <p class="achievement-desc">Salva 25 film</p>
+                            <div class="achievement-progress">
+                                <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-collector-25"></div></div>
+                                <span class="progress-text" id="text-collector-25">0/25</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card glass-card locked has-progress" data-achievement="collector-50">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Bibliotecario</p>
+                            <p class="achievement-desc">Salva 50 film</p>
+                            <div class="achievement-progress">
+                                <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-collector-50"></div></div>
+                                <span class="progress-text" id="text-collector-50">0/50</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Achievements -->
+                    <div class="achievement-card glass-card locked" data-achievement="social">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Sociale</p>
+                            <p class="achievement-desc">Crea il tuo primo gruppo</p>
+                        </div>
+                        <div class="achievement-status">
+                            <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card glass-card locked has-progress" data-achievement="genre-master">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                                <line x1="7" y1="2" x2="7" y2="22"></line>
+                                <line x1="17" y1="2" x2="17" y2="22"></line>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Esperto Generi</p>
+                            <p class="achievement-desc">Esplora 5 generi diversi</p>
+                            <div class="achievement-progress">
+                                <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-genre-master"></div></div>
+                                <span class="progress-text" id="text-genre-master">0/5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card glass-card locked" data-achievement="night-owl">
+                        <div class="achievement-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                        </div>
+                        <div class="achievement-info">
+                            <p class="achievement-title">Nottambulo</p>
+                            <p class="achievement-desc">Usa l'app dopo mezzanotte</p>
+                        </div>
+                        <div class="achievement-status">
+                            <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
             <!-- Settings -->
             <h3 class="section-title" data-i18n="settings">Impostazioni</h3>
             <div class="settings-list">
+                <!-- Account Section -->
+                <div class="settings-section-header" data-i18n="account">Account</div>
+                
+                <!-- Edit Profile -->
+                <div class="menu-item clickable" id="editProfileMenuItem">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span class="menu-label" data-i18n="editProfile">Modifica profilo</span>
+                    <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+
                 <!-- Language -->
                 <div class="menu-item" id="languageMenuItem">
                     <svg viewBox="0 0 24 24">
@@ -355,12 +617,18 @@
                     <select id="languageSelect" class="select-minimal">
                         <option value="it">🇮🇹 Italiano</option>
                         <option value="en">🇬🇧 English</option>
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="de">🇩🇪 Deutsch</option>
                     </select>
                 </div>
+
+                <!-- Preferences Section -->
+                <div class="settings-section-header" data-i18n="preferences">Preferenze</div>
                 
                 <!-- Theme -->
                 <div class="menu-item" id="themeMenuItem">
-                    <svg viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" id="themeIcon">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
                         <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -384,6 +652,10 @@
                     <span class="menu-label" data-i18n="notifications">Notifiche</span>
                     <div id="notificationsToggle" class="toggle-switch"></div>
                 </div>
+
+
+                <!-- Support Section -->
+                <div class="settings-section-header" data-i18n="support">Supporto</div>
                 
                 <!-- Privacy -->
                 <div class="menu-item clickable" id="privacyMenuItem">
@@ -405,6 +677,10 @@
                     <span class="menu-label" data-i18n="helpCenter">Centro assistenza</span>
                     <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
+
+
+                <!-- Danger Zone -->
+                <div class="settings-section-header danger" data-i18n="dangerZone">Zona pericolosa</div>
                 
                 <!-- Clear Data -->
                 <div class="menu-item clickable danger" id="clearDataMenuItem">
@@ -412,7 +688,7 @@
                         <polyline points="3 6 5 6 21 6"></polyline>
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                     </svg>
-                    <span class="menu-label" data-i18n="clearData">Cancella dati</span>
+                    <span class="menu-label" data-i18n="clearData">Cancella tutti i dati</span>
                     <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
             </div>
@@ -427,7 +703,9 @@
                 <span data-i18n="logout">Esci dall'account</span>
             </button>
 
-            <p class="version-text">GluGluPop v2.0.0</p>
+            <div class="app-info">
+                <p class="version-text">GluGluPop v2.0.0</p>
+            </div>
         </section>
 
         <!-- ==================== BOTTOM NAVIGATION ==================== -->
@@ -506,7 +784,7 @@
         </div>
 
         <!-- Search Sheet -->
-        <div id="searchSheet" class="bottom-sheet">
+        <div id="searchSheet" class="bottom-sheet large">
             <div class="sheet-handle"><div class="handle-bar"></div></div>
             <div class="search-header">
                 <div class="search-input-wrapper">
@@ -519,9 +797,74 @@
                         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>
+                <!-- Search Filters -->
+                <div class="search-filters">
+                    <button class="search-filter-btn active" data-search-type="all">
+                        <svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="10"></circle></svg>
+                        <span data-i18n="all">Tutti</span>
+                    </button>
+                    <button class="search-filter-btn" data-search-type="catalog">
+                    </button>
+                    <button class="search-filter-btn" data-search-type="favorites">
+                        <span data-i18n="favorites">Preferiti</span>
+                    </button>
+                    <button class="search-filter-btn" data-search-type="watchlist">
+                        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                        <span data-i18n="toWatch">Da vedere</span>
+                    </button>
+                </div>
             </div>
-            <div id="searchResults" class="sheet-content">
-                <p class="search-hint" data-i18n="searchHint">Cerca per titolo, regista o genere</p>
+            <div class="sheet-content" id="searchContent">
+                <!-- Recent Searches -->
+                <div id="recentSearches" class="recent-searches">
+                    <div class="section-header">
+                        <h4 data-i18n="recentSearches">Ricerche recenti</h4>
+                        <button class="btn-text" id="clearRecentSearches" data-i18n="clear">Cancella</button>
+                    </div>
+                    <div id="recentSearchesList" class="recent-searches-list"></div>
+                </div>
+                
+                <!-- Popular Genres -->
+                <div id="popularGenres" class="popular-genres">
+                    <h4 data-i18n="browseByGenre">Sfoglia per genere</h4>
+                    <div class="genre-grid">
+                        <button class="genre-btn" data-genre="28">
+                            <span class="genre-emoji">💥</span>
+                            <span data-i18n="action">Azione</span>
+                        </button>
+                        <button class="genre-btn" data-genre="35">
+                            <span class="genre-emoji">😂</span>
+                            <span data-i18n="comedy">Commedia</span>
+                        </button>
+                        <button class="genre-btn" data-genre="18">
+                            <span class="genre-emoji">🎭</span>
+                            <span data-i18n="drama">Drammatico</span>
+                        </button>
+                        <button class="genre-btn" data-genre="27">
+                            <span class="genre-emoji">👻</span>
+                            <span data-i18n="horror">Horror</span>
+                        </button>
+                        <button class="genre-btn" data-genre="878">
+                            <span class="genre-emoji">🚀</span>
+                            <span data-i18n="scifi">Fantascienza</span>
+                        </button>
+                        <button class="genre-btn" data-genre="10749">
+                            <span class="genre-emoji">💕</span>
+                            <span data-i18n="romance">Romance</span>
+                        </button>
+                        <button class="genre-btn" data-genre="53">
+                            <span class="genre-emoji">🔪</span>
+                            <span data-i18n="thriller">Thriller</span>
+                        </button>
+                        <button class="genre-btn" data-genre="16">
+                            <span class="genre-emoji">🎨</span>
+                            <span data-i18n="animation">Animazione</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Search Results -->
+                <div id="searchResults" class="search-results-container"></div>
             </div>
         </div>
 
@@ -530,6 +873,31 @@
             <div class="sheet-handle"><div class="handle-bar"></div></div>
             <div class="sheet-content">
                 <h2 data-i18n="editProfile">Modifica profilo</h2>
+                
+                <!-- Avatar Section -->
+                <div class="edit-avatar-section">
+                    <div class="edit-avatar" id="editAvatarPreview">
+                        <span id="editAvatarInitials">MR</span>
+                    </div>
+                    <div class="edit-avatar-actions">
+                        <button class="btn-outline small" id="changeAvatarColorBtn">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg>
+                            <span data-i18n="changeColor">Cambia colore</span>
+                        </button>
+                    </div>
+                    <div class="avatar-colors" id="avatarColors">
+                        <button class="color-btn active" data-color="gradient" style="background: var(--accent-gradient);"></button>
+                        <button class="color-btn" data-color="#EF4444" style="background: #EF4444;"></button>
+                        <button class="color-btn" data-color="#F59E0B" style="background: #F59E0B;"></button>
+                        <button class="color-btn" data-color="#10B981" style="background: #10B981;"></button>
+                        <button class="color-btn" data-color="#3B82F6" style="background: #3B82F6;"></button>
+                        <button class="color-btn" data-color="#8B5CF6" style="background: #8B5CF6;"></button>
+                        <button class="color-btn" data-color="#EC4899" style="background: #EC4899;"></button>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label data-i18n="name">Nome</label>
                     <input type="text" id="editNameInput" class="input-field" placeholder="Il tuo nome">
@@ -538,9 +906,138 @@
                     <label>Email</label>
                     <input type="email" id="editEmailInput" class="input-field" placeholder="La tua email">
                 </div>
-                <button id="saveProfileBtn" class="btn-primary full-width">
-                    <span data-i18n="save">Salva</span>
+                <div class="form-group">
+                    <label data-i18n="bio">Bio</label>
+                    <textarea id="editBioInput" class="input-field textarea" placeholder="Racconta qualcosa di te..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="favoriteGenre">Genere preferito</label>
+                    <select id="editFavoriteGenre" class="input-field select-field">
+                        <option value="">Seleziona...</option>
+                        <option value="action">Azione</option>
+                        <option value="comedy">Commedia</option>
+                        <option value="drama">Drammatico</option>
+                        <option value="horror">Horror</option>
+                        <option value="scifi">Fantascienza</option>
+                        <option value="romance">Romance</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="animation">Animazione</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button id="cancelProfileBtn" class="btn-secondary">
+                        <span data-i18n="cancel">Annulla</span>
+                    </button>
+                    <button id="saveProfileBtn" class="btn-primary">
+                        <span data-i18n="save">Salva</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Sheet -->
+        <div id="activitySheet" class="bottom-sheet">
+            <div class="sheet-handle"><div class="handle-bar"></div></div>
+            <div class="sheet-content">
+                <h2 data-i18n="recentActivity">Attività recente</h2>
+                <div id="fullActivityList" class="activity-list-full"></div>
+            </div>
+        </div>
+
+        <!-- Feedback Sheet -->
+        <div id="feedbackSheet" class="bottom-sheet">
+            <div class="sheet-handle"><div class="handle-bar"></div></div>
+            <div class="sheet-content">
+                <h2 data-i18n="sendFeedback">Invia feedback</h2>
+                <p class="sheet-description" data-i18n="feedbackDesc">Il tuo feedback ci aiuta a migliorare l'app</p>
+                
+                <div class="feedback-type-selector">
+                    <button class="feedback-type-btn active" data-type="suggestion">
+                        <span class="feedback-emoji">💡</span>
+                        <span data-i18n="suggestion">Suggerimento</span>
+                    </button>
+                    <button class="feedback-type-btn" data-type="bug">
+                        <span class="feedback-emoji">🐛</span>
+                        <span data-i18n="bug">Bug</span>
+                    </button>
+                    <button class="feedback-type-btn" data-type="other">
+                        <span class="feedback-emoji">💬</span>
+                        <span data-i18n="other">Altro</span>
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="message">Messaggio</label>
+                    <textarea id="feedbackMessage" class="input-field textarea" placeholder="Scrivi qui il tuo feedback..." rows="5"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="feedbackContact" checked>
+                        <span class="checkbox-custom"></span>
+                        <span data-i18n="contactForFeedback">Possiamo contattarti per ulteriori dettagli</span>
+                    </label>
+                </div>
+
+                <button id="sendFeedbackBtn" class="btn-primary full-width">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    <span data-i18n="send">Invia</span>
                 </button>
+            </div>
+        </div>
+
+        <!-- About Sheet -->
+        <div id="aboutSheet" class="bottom-sheet">
+            <div class="sheet-handle"><div class="handle-bar"></div></div>
+            <div class="sheet-content">
+                <div class="about-header">
+                    <div class="about-logo">
+                        <div class="logo-icon-3d small">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h2>GluGluPop</h2>
+                    <p class="about-version">Version 2.0.0</p>
+                </div>
+
+                <div class="about-section">
+                    <h4 data-i18n="aboutApp">Informazioni</h4>
+                    <p data-i18n="aboutAppDesc">GluGluPop è la tua app per scoprire nuovi film, organizzare serate cinema con gli amici e tenere traccia dei tuoi gusti cinematografici.</p>
+                </div>
+
+                <div class="about-section">
+                    <h4 data-i18n="credits">Crediti</h4>
+                    <div class="credits-list">
+                        <div class="credit-item">
+                            <span class="credit-label">Film Data</span>
+                            <span class="credit-value">TMDb API</span>
+                        </div>
+                        <div class="credit-item">
+                            <span class="credit-label">Drinks</span>
+                            <span class="credit-value">TheCocktailDB</span>
+                        </div>
+                        <div class="credit-item">
+                            <span class="credit-label">Food</span>
+                            <span class="credit-value">Spoonacular</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h4 data-i18n="legal">Legale</h4>
+                    <div class="legal-links">
+                        <a href="#" class="legal-link" data-i18n="termsOfService">Termini di servizio</a>
+                        <a href="#" class="legal-link" data-i18n="privacyPolicy">Privacy Policy</a>
+                        <a href="#" class="legal-link" data-i18n="licenses">Licenze open source</a>
+                    </div>
+                </div>
+
+                <p class="about-copyright">© 2024 GluGluPop. All rights reserved.</p>
             </div>
         </div>
 
