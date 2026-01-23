@@ -46,7 +46,7 @@
                 <div class="loader-bar">
                     <div class="loader-progress"></div>
                 </div>
-                <p class="loader-text">Caricamento...</p>
+                <p class="loader-text" data-i18n="splashLoading">Caricamento...</p>
             </div>
         </div>
         
@@ -79,13 +79,13 @@
                 
                 <!-- Actions -->
                 <div class="header-actions">
-                    <button id="muteBtn" class="header-btn tooltip" data-tooltip="Audio">
+                    <button id="muteBtn" class="header-btn tooltip" data-tooltip-key="audioLabel" data-tooltip="Audio">
                         <svg id="muteIcon" viewBox="0 0 24 24">
                             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                         </svg>
                     </button>
-                    <button id="searchBtn" class="header-btn tooltip" data-tooltip="Cerca">
+                    <button id="searchBtn" class="header-btn tooltip" data-tooltip-key="searchLabel" data-tooltip="Cerca">
                         <svg viewBox="0 0 24 24">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -162,18 +162,18 @@
                 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <button id="skipBtn" class="action-btn skip" title="Salta">
+                    <button id="skipBtn" class="action-btn skip" title="Salta" data-i18n-title="skipLabel">
                         <svg viewBox="0 0 24 24">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                     </button>
-                    <button id="saveBtn" class="action-btn bookmark" title="Salva">
+                    <button id="saveBtn" class="action-btn bookmark" title="Salva" data-i18n-title="saveLabel">
                         <svg viewBox="0 0 24 24">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                     </button>
-                    <button id="likeBtn" class="action-btn like" title="Mi piace">
+                    <button id="likeBtn" class="action-btn like" title="Mi piace" data-i18n-title="likeLabel">
                         <svg viewBox="0 0 24 24">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                         </svg>
@@ -409,8 +409,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Primo Swipe</p>
-                            <p class="achievement-desc">Valuta il tuo primo film</p>
+                            <p class="achievement-title" data-i18n="firstSwipe">Primo Swipe</p>
+                            <p class="achievement-desc" data-i18n="firstSwipeDesc">Valuta il tuo primo film</p>
                         </div>
                         <div class="achievement-status">
                             <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -427,8 +427,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Primo Amore</p>
-                            <p class="achievement-desc">Salva il tuo primo film</p>
+                            <p class="achievement-title" data-i18n="firstLove">Primo Amore</p>
+                            <p class="achievement-desc" data-i18n="firstMovieDesc">Salva il tuo primo film</p>
                         </div>
                         <div class="achievement-status">
                             <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -445,8 +445,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Lista Desideri</p>
-                            <p class="achievement-desc">Aggiungi alla watchlist</p>
+                            <p class="achievement-title" data-i18n="firstWatchlist">Lista Desideri</p>
+                            <p class="achievement-desc" data-i18n="toWatch">Aggiungi alla watchlist</p>
                         </div>
                         <div class="achievement-status">
                             <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -465,8 +465,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Esploratore</p>
-                            <p class="achievement-desc">Valuta 10 film</p>
+                            <p class="achievement-title" data-i18n="explorer">Esploratore</p>
+                            <p class="achievement-desc" data-i18n="explorerDesc">Valuta 10 film</p>
                             <div class="achievement-progress">
                                 <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-explorer-10"></div></div>
                                 <span class="progress-text" id="text-explorer-10">0/10</span>
@@ -481,8 +481,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Critico</p>
-                            <p class="achievement-desc">Valuta 50 film</p>
+                            <p class="achievement-title" data-i18n="critic">Critico</p>
+                            <p class="achievement-desc" data-i18n="criticDesc">Valuta 50 film</p>
                             <div class="achievement-progress">
                                 <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-explorer-50"></div></div>
                                 <span class="progress-text" id="text-explorer-50">0/50</span>
@@ -498,8 +498,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Cinefilo Pro</p>
-                            <p class="achievement-desc">Valuta 100 film</p>
+                            <p class="achievement-title" data-i18n="cinephilePro">Cinefilo Pro</p>
+                            <p class="achievement-desc" data-i18n="cinephileProDesc">Valuta 100 film</p>
                             <div class="achievement-progress">
                                 <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-explorer-100"></div></div>
                                 <span class="progress-text" id="text-explorer-100">0/100</span>
@@ -516,8 +516,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Collezionista</p>
-                            <p class="achievement-desc">Salva 10 film</p>
+                            <p class="achievement-title" data-i18n="collector">Collezionista</p>
+                            <p class="achievement-desc" data-i18n="collectorDesc">Salva 10 film</p>
                             <div class="achievement-progress">
                                 <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-collector-10"></div></div>
                                 <span class="progress-text" id="text-collector-10">0/10</span>
@@ -534,8 +534,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Archivista</p>
-                            <p class="achievement-desc">Salva 25 film</p>
+                            <p class="achievement-title" data-i18n="archivist">Archivista</p>
+                            <p class="achievement-desc" data-i18n="archivistDesc">Salva 25 film</p>
                             <div class="achievement-progress">
                                 <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-collector-25"></div></div>
                                 <span class="progress-text" id="text-collector-25">0/25</span>
@@ -550,8 +550,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Bibliotecario</p>
-                            <p class="achievement-desc">Salva 50 film</p>
+                            <p class="achievement-title" data-i18n="librarian">Bibliotecario</p>
+                            <p class="achievement-desc" data-i18n="librarianDesc">Salva 50 film</p>
                             <div class="achievement-progress">
                                 <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-collector-50"></div></div>
                                 <span class="progress-text" id="text-collector-50">0/50</span>
@@ -570,8 +570,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Sociale</p>
-                            <p class="achievement-desc">Crea il tuo primo gruppo</p>
+                            <p class="achievement-title" data-i18n="social">Sociale</p>
+                            <p class="achievement-desc" data-i18n="socialDesc">Crea il tuo primo gruppo</p>
                         </div>
                         <div class="achievement-status">
                             <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -591,8 +591,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Esperto Generi</p>
-                            <p class="achievement-desc">Esplora 5 generi diversi</p>
+                            <p class="achievement-title" data-i18n="genreExpert">Esperto Generi</p>
+                            <p class="achievement-desc" data-i18n="genreExpertDesc">Esplora 5 generi diversi</p>
                             <div class="achievement-progress">
                                 <div class="mini-progress-bar"><div class="mini-progress-fill" id="progress-genre-master"></div></div>
                                 <span class="progress-text" id="text-genre-master">0/5</span>
@@ -607,8 +607,8 @@
                             </svg>
                         </div>
                         <div class="achievement-info">
-                            <p class="achievement-title">Nottambulo</p>
-                            <p class="achievement-desc">Usa l'app dopo mezzanotte</p>
+                            <p class="achievement-title" data-i18n="nightOwl">Nottambulo</p>
+                            <p class="achievement-desc" data-i18n="nightOwlDesc">Usa l'app dopo mezzanotte</p>
                         </div>
                         <div class="achievement-status">
                             <svg class="lock-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -619,7 +619,7 @@
                     </div>
                 </div>
             </div>
-            
+            <br>
             <!-- Settings -->
             <h3 class="section-title" data-i18n="settings">Impostazioni</h3>
             <div class="settings-list">
@@ -781,13 +781,13 @@
                 <p class="version-text">GluGluPop v2.0.0</p>
                 <p class="copyright-text">© 2024 GluGluPop. All rights reserved.</p>
                 <div class="social-links">
-                    <a href="#" class="social-link" title="Twitter">
+                    <a href="https://x.com/GluGlu_Pop" class="social-link" title="Twitter">
                         <svg viewBox="0 0 24 24" width="18" height="18"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
                     </a>
-                    <a href="#" class="social-link" title="Instagram">
-                        <svg viewBox="0 0 24 24" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    <a href="https://www.facebook.com/profile.php?id=61587106707006" class="social-link" title="Facebook">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.3V12h2.3V9.8 c0-2.3 1.4-3.6 3.5-3.6 1 0 2 .2 2 .2v2.2h-1.1 c-1.1 0-1.4.7-1.4 1.4V12h2.4l-.4 2.9h-2v7 A10 10 0 0 0 22 12z"/></svg>
                     </a>
-                    <a href="#" class="social-link" title="GitHub">
+                    <a href="https://github.com/Vittorio-Francesco-Ardente/GluGluPop_TPS_API" class="social-link" title="GitHub">
                         <svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                     </a>
                 </div>
@@ -855,7 +855,7 @@
                 </div>
                 <div class="form-group">
                     <label data-i18n="inviteFriend">Invita un amico (email)</label>
-                    <input type="email" id="groupEmailInput" class="input-field" placeholder="amico@email.com">
+                    <input type="email" id="groupEmailInput" class="input-field" placeholder="example@email.com">
                 </div>
                 <button id="confirmGroupBtn" class="btn-primary full-width">
                     <span data-i18n="createGroup">Crea gruppo</span>
@@ -992,25 +992,25 @@
                     <input type="text" id="editNameInput" class="input-field" placeholder="Il tuo nome">
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
+                    <label data-i18n="email">Email</label>
                     <input type="email" id="editEmailInput" class="input-field" placeholder="La tua email">
                 </div>
                 <div class="form-group">
                     <label data-i18n="bio">Bio</label>
-                    <textarea id="editBioInput" class="input-field textarea" placeholder="Racconta qualcosa di te..." rows="3"></textarea>
+                    <textarea id="editBioInput" class="input-field textarea" data-i18n-placeholder="bioPlaceholder" placeholder="Racconta qualcosa di te..." rows="3"></textarea>
                 </div>
                 <div class="form-group">
                     <label data-i18n="favoriteGenre">Genere preferito</label>
                     <select id="editFavoriteGenre" class="input-field select-field">
-                        <option value="">Seleziona...</option>
-                        <option value="action">Azione</option>
-                        <option value="comedy">Commedia</option>
-                        <option value="drama">Drammatico</option>
-                        <option value="horror">Horror</option>
-                        <option value="scifi">Fantascienza</option>
-                        <option value="romance">Romance</option>
-                        <option value="thriller">Thriller</option>
-                        <option value="animation">Animazione</option>
+                        <option value="" data-i18n="selectOption">Seleziona...</option>
+                        <option value="action" data-i18n="action">Azione</option>
+                        <option value="comedy" data-i18n="comedy">Commedia</option>
+                        <option value="drama" data-i18n="drama">Drammatico</option>
+                        <option value="horror" data-i18n="horror">Horror</option>
+                        <option value="scifi" data-i18n="scifi">Fantascienza</option>
+                        <option value="romance" data-i18n="romance">Romance</option>
+                        <option value="thriller" data-i18n="thriller">Thriller</option>
+                        <option value="animation" data-i18n="animation">Animazione</option>
                     </select>
                 </div>
                 <div class="form-actions">
@@ -1039,6 +1039,7 @@
             <div class="sheet-content">
                 <h2 data-i18n="sendFeedback">Invia feedback</h2>
                 <p class="sheet-description" data-i18n="feedbackDesc">Il tuo feedback ci aiuta a migliorare l'app</p>
+                <br>
                 
                 <div class="feedback-type-selector">
                     <button class="feedback-type-btn active" data-type="suggestion">
@@ -1057,7 +1058,7 @@
 
                 <div class="form-group">
                     <label data-i18n="message">Messaggio</label>
-                    <textarea id="feedbackMessage" class="input-field textarea" placeholder="Scrivi qui il tuo feedback..." rows="5"></textarea>
+                    <textarea id="feedbackMessage" class="input-field textarea" data-i18n-placeholder="writeHereFeedback" placeholder="Scrivi qui il tuo feedback..." rows="5"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -1091,7 +1092,7 @@
                         </div>
                     </div>
                     <h2>GluGluPop</h2>
-                    <p class="about-version">Version 2.0.0</p>
+                    <p class="about-version" data-i18n="version">Version 2.0.0</p>
                 </div>
 
                 <div class="about-section">
@@ -1103,16 +1104,16 @@
                     <h4 data-i18n="credits">Crediti</h4>
                     <div class="credits-list">
                         <div class="credit-item">
-                            <span class="credit-label">Film Data</span>
-                            <span class="credit-value">TMDb API</span>
+                            <span class="credit-label" data-i18n="filmDataLabel">Film Data</span>
+                            <span class="credit-value" data-i18n="tmdbLabel">TMDb API</span>
                         </div>
                         <div class="credit-item">
-                            <span class="credit-label">Drinks</span>
-                            <span class="credit-value">TheCocktailDB</span>
+                            <span class="credit-label" data-i18n="drinkLabel">Drinks</span>
+                            <span class="credit-value" data-i18n="thecocktaildbLabel">TheCocktailDB</span>
                         </div>
                         <div class="credit-item">
-                            <span class="credit-label">Food</span>
-                            <span class="credit-value">Spoonacular</span>
+                            <span class="credit-label" data-i18n="foodLabel">Food</span>
+                            <span class="credit-value" data-i18n="spoonacularLabel">Spoonacular</span>
                         </div>
                     </div>
                 </div>
@@ -1126,7 +1127,7 @@
                     </div>
                 </div>
 
-                <p class="about-copyright">© 2024 GluGluPop. All rights reserved.</p>
+                <p class="about-copyright" data-i18n="copyrightText">© 2024 GluGluPop. All rights reserved.</p>
             </div>
         </div>
 
@@ -1138,9 +1139,9 @@
                 <div class="info-card glass-card">
                     <div class="info-card-header">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        <h4>I tuoi dati sono al sicuro</h4>
+                        <h4 data-i18n="dataSafeTitle">I tuoi dati sono al sicuro</h4>
                     </div>
-                    <p>Tutti i tuoi dati sono salvati localmente sul tuo dispositivo. Non condividiamo nessuna informazione con terze parti.</p>
+                    <p data-i18n="dataSafeDesc">Tutti i tuoi dati sono salvati localmente sul tuo dispositivo. Non condividiamo nessuna informazione con terze parti.</p>
                 </div>
                 <div class="settings-list" style="margin-top: 20px;">
                     <div class="menu-item">
@@ -1162,25 +1163,25 @@
                 <h2 data-i18n="helpCenter">Centro assistenza</h2>
                 <div class="faq-list">
                     <div class="faq-item glass-card">
-                        <h4>Come funziona lo swipe?</h4>
-                        <p>Scorri a destra per aggiungere un film ai preferiti, a sinistra per saltarlo.</p>
+                        <h4 data-i18n="swipeHowTitle">Come funziona lo swipe?</h4>
+                        <p data-i18n="swipeHowDesc">Scorri a destra per aggiungere un film ai preferiti, a sinistra per saltarlo.</p>
                     </div>
                     <div class="faq-item glass-card">
-                        <h4>Come creo un gruppo?</h4>
-                        <p>Vai nella sezione Gruppi e clicca su "Nuovo" per creare un gruppo e invitare amici.</p>
+                        <h4 data-i18n="groupCreateTitle">Come creo un gruppo?</h4>
+                        <p data-i18n="groupCreateDesc">Vai nella sezione Gruppi e clicca su "Nuovo" per creare un gruppo e invitare amici.</p>
                     </div>
                     <div class="faq-item glass-card">
-                        <h4>Dove trovo i film salvati?</h4>
-                        <p>Tutti i film che hai salvato sono nella sezione "Salvati" accessibile dal menu in basso.</p>
+                        <h4 data-i18n="savedMoviesTitle">Dove trovo i film salvati?</h4>
+                        <p data-i18n="savedMoviesDesc">Tutti i film che hai salvato sono nella sezione "Salvati" accessibile dal menu in basso.</p>
                     </div>
                     <div class="faq-item glass-card">
-                        <h4>Come cambio la lingua?</h4>
-                        <p>Vai nel tuo Profilo > Impostazioni > Lingua e seleziona la lingua desiderata.</p>
+                        <h4 data-i18n="languageChangeTitle">Come cambio la lingua?</h4>
+                        <p data-i18n="languageChangeDesc">Vai nel tuo Profilo > Impostazioni > Lingua e seleziona la lingua desiderata.</p>
                     </div>
                 </div>
                 <div class="contact-support">
                     <p data-i18n="needHelp">Hai bisogno di altro aiuto?</p>
-                    <button class="btn-outline full-width">
+                    <button id="contactUsBtn" class="btn-outline full-width">
                         <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                         <span data-i18n="contactUs">Contattaci</span>
                     </button>
@@ -1197,11 +1198,11 @@
         <!-- ==================== CONFIRM DIALOG ==================== -->
         <div id="confirmDialog" class="confirm-dialog">
             <div class="confirm-content glass-card">
-                <h3 id="confirmTitle">Conferma</h3>
-                <p id="confirmMessage">Sei sicuro?</p>
+                <h3 id="confirmTitle" data-i18n="confirmTitle">Conferma</h3>
+                <p id="confirmMessage" data-i18n="confirmMessage">Sei sicuro?</p>
                 <div class="confirm-actions">
-                    <button id="confirmCancel" class="btn-secondary">Annulla</button>
-                    <button id="confirmOk" class="btn-primary danger">Conferma</button>
+                    <button id="confirmCancel" class="btn-secondary" data-i18n="cancel">Annulla</button>
+                    <button id="confirmOk" class="btn-primary danger" data-i18n="confirm">Conferma</button>
                 </div>
             </div>
         </div>

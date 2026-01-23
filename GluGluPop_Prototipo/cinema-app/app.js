@@ -157,6 +157,7 @@ const i18n = {
             inviteFriend: 'Invita un amico (email)',
             
             // Profile
+            bioPlaceholder: "Racconta qualcosa di te...",
             memberSince: 'Membro dal Gennaio 2024',
             favoriteGenres: 'I tuoi generi preferiti',
             settings: 'Impostazioni',
@@ -205,6 +206,8 @@ const i18n = {
             message: 'Messaggio',
             contactForFeedback: 'Possiamo contattarti per ulteriori dettagli',
             feedbackSent: 'Feedback inviato! Grazie',
+            writeHereFeedback: "Scrivi qui il tuo feedback...",
+            copyemail: "copiata negli appunti!",
             
             // About
             aboutApp: 'Informazioni',
@@ -300,6 +303,7 @@ const i18n = {
             music: 'Musiche',
             cinematography: 'Fotografia',
             synopsisNotAvailable: 'Trama non disponibile.',
+            FoodRecDescription: 'Perfetti per la tua serata cinema',
             
             // Members
             members: 'Membri',
@@ -308,7 +312,75 @@ const i18n = {
             noMoviesProposed: 'Nessun film proposto',
             addMovies: 'Aggiungi film',
             invite: 'Invita',
-            memberEmail: 'Email del membro:'
+            memberEmail: 'Email del membro:',
+            
+            // Achievement Titles & Descriptions
+            firstSwipe: 'Primo Swipe',
+            firstSwipeDesc: 'Valuta il tuo primo film',
+            firstLove: 'Primo Amore',
+            firstWatchlist: 'Lista Desideri',
+            critic: 'Critico',
+            criticDesc: 'Valuta 50 film',
+            cinephilePro: 'Cinefilo Pro',
+            cinephileProDesc: 'Valuta 100 film',
+            collector: 'Collezionista',
+            collectorDesc: 'Salva 10 film',
+            archivist: 'Archivista',
+            archivistDesc: 'Salva 25 film',
+            librarian: 'Bibliotecario',
+            librarianDesc: 'Salva 50 film',
+            genreExpert: 'Esperto Generi',
+            genreExpertDesc: 'Esplora 5 generi diversi',
+            nightOwl: 'Nottambulo',
+            nightOwlDesc: 'Usa l\'app dopo mezzanotte',
+            
+            // FAQ/Help
+            swipeHowTitle: 'Come funziona lo swipe?',
+            swipeHowDesc: 'Scorri a destra per aggiungere un film ai preferiti, a sinistra per saltarlo.',
+            groupCreateTitle: 'Come creo un gruppo?',
+            groupCreateDesc: 'Vai nella sezione Gruppi e clicca su "Nuovo" per creare un gruppo e invitare amici.',
+            savedMoviesTitle: 'Dove trovo i film salvati?',
+            savedMoviesDesc: 'Tutti i film che hai salvato sono nella sezione "Salvati" accessibile dal menu in basso.',
+            languageChangeTitle: 'Come cambio la lingua?',
+            languageChangeDesc: 'Vai nel tuo Profilo > Impostazioni > Lingua e seleziona la lingua desiderata.',
+            
+            // Privacy & Security
+            dataSafeTitle: 'I tuoi dati sono al sicuro',
+            dataSafeDesc: 'Tutti i tuoi dati sono salvati localmente sul tuo dispositivo. Non condividiamo nessuna informazione con terze parti.',
+            
+            // App Info
+            email: 'Email',
+            selectOption: 'Seleziona...',
+            version: 'Versione 2.0.0',
+            copyright: '© 2024 GluGluPop. All rights reserved.',
+            
+            // Additional
+            audioLabel: 'Audio',
+            searchLabel: 'Cerca',
+            skipLabel: 'Salta',
+            saveLabel: 'Salva',
+            likeLabel: 'Mi piace',
+            member: "membro",
+            members: "membri",
+            
+            // Dialog Confirm
+            confirmTitle: 'Conferma',
+            confirmMessage: 'Sei sicuro?',
+            
+            // Loading & Version
+            splashLoading: 'Caricamento...',
+            version: 'Versione 2.0.0',
+            
+            // Credits
+            filmDataLabel: 'Film Data',
+            drinkLabel: 'Drinks',
+            foodLabel: 'Food',
+            tmdbLabel: 'TMDb API',
+            thecocktaildbLabel: 'TheCocktailDB',
+            spoonacularLabel: 'Spoonacular',
+            
+            // About
+            copyrightText: '© 2024 GluGluPop. All rights reserved.'
         },
         
         en: {
@@ -366,6 +438,7 @@ const i18n = {
             inviteFriend: 'Invite a friend (email)',
             
             // Profile
+            bioPlaceholder: "Tell us something about you...",
             memberSince: 'Member since January 2024',
             favoriteGenres: 'Your favorite genres',
             settings: 'Settings',
@@ -414,7 +487,9 @@ const i18n = {
             message: 'Message',
             contactForFeedback: 'We can contact you for more details',
             feedbackSent: 'Feedback sent! Thank you',
-            
+            writeHereFeedback: "write here your feedback...",
+            copyemail: "copied in the clipboard!",
+
             // About
             aboutApp: 'About',
             aboutAppDesc: 'GluGluPop is your app to discover new movies, organize movie nights with friends and keep track of your cinematic tastes.',
@@ -480,7 +555,8 @@ const i18n = {
             music: 'Music',
             cinematography: 'Cinematography',
             synopsisNotAvailable: 'Synopsis not available.',
-            
+            FoodRecDescription: 'Perfect for your movie night',
+
             // Members
             members: 'Members',
             admin: 'Admin',
@@ -488,10 +564,76 @@ const i18n = {
             noMoviesProposed: 'No movies proposed',
             addMovies: 'Add movies',
             invite: 'Invite',
-            memberEmail: 'Member email:'
-        },
-        
-        
+            memberEmail: 'Member email:',
+            
+            // Achievement Titles & Descriptions
+            firstSwipe: 'First Swipe',
+            firstSwipeDesc: 'Rate your first movie',
+            firstLove: 'First Love',
+            firstWatchlist: 'Wishlist',
+            critic: 'Critic',
+            criticDesc: 'Rate 50 movies',
+            cinephilePro: 'Cinephile Pro',
+            cinephileProDesc: 'Rate 100 movies',
+            collector: 'Collector',
+            collectorDesc: 'Save 10 movies',
+            archivist: 'Archivist',
+            archivistDesc: 'Save 25 movies',
+            librarian: 'Librarian',
+            librarianDesc: 'Save 50 movies',
+            genreExpert: 'Genre Expert',
+            genreExpertDesc: 'Explore 5 different genres',
+            nightOwl: 'Night Owl',
+            nightOwlDesc: 'Use the app after midnight',
+            
+            // FAQ/Help
+            swipeHowTitle: 'How does swipe work?',
+            swipeHowDesc: 'Swipe right to add a movie to your favorites, left to skip it.',
+            groupCreateTitle: 'How do I create a group?',
+            groupCreateDesc: 'Go to the Groups section and click "New" to create a group and invite friends.',
+            savedMoviesTitle: 'Where can I find my saved movies?',
+            savedMoviesDesc: 'All your saved movies are in the "Saved" section accessible from the menu at the bottom.',
+            languageChangeTitle: 'How do I change the language?',
+            languageChangeDesc: 'Go to your Profile > Settings > Language and select your preferred language.',
+            
+            // Privacy & Security
+            dataSafeTitle: 'Your data is safe',
+            dataSafeDesc: 'All your data is saved locally on your device. We do not share any information with third parties.',
+            
+            // App Info
+            email: 'Email',
+            selectOption: 'Select...',
+            version: 'Version 2.0.0',
+            copyright: '© 2024 GluGluPop. All rights reserved.',
+            
+            // Additional
+            audioLabel: 'Audio',
+            searchLabel: 'Search',
+            skipLabel: 'Skip',
+            saveLabel: 'Save',
+            likeLabel: 'Like',
+            member: "member",
+            members: "members",
+            
+            // Dialog Confirm
+            confirmTitle: 'Confirm',
+            confirmMessage: 'Are you sure?',
+            
+            // Loading & Version
+            splashLoading: 'Loading...',
+            version: 'Version 2.0.0',
+            
+            // Credits
+            filmDataLabel: 'Film Data',
+            drinkLabel: 'Drinks',
+            foodLabel: 'Food',
+            tmdbLabel: 'TMDb API',
+            thecocktaildbLabel: 'TheCocktailDB',
+            spoonacularLabel: 'Spoonacular',
+            
+            // About
+            copyrightText: '© 2024 GluGluPop. All rights reserved.'
+        }, 
     },
     
     // Get translation
@@ -519,6 +661,18 @@ const i18n = {
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
             const key = el.getAttribute('data-i18n-placeholder');
             el.placeholder = this.t(key);
+        });
+        
+        // Update data-i18n-title elements
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            const key = el.getAttribute('data-i18n-title');
+            el.setAttribute('title', this.t(key));
+        });
+        
+        // Update data-tooltip-key elements
+        document.querySelectorAll('[data-tooltip-key]').forEach(el => {
+            const key = el.getAttribute('data-tooltip-key');
+            el.setAttribute('data-tooltip', this.t(key));
         });
     }
 };
@@ -638,7 +792,7 @@ const API = {
             if (data.results?.[0]) {
                 return {
                     name: data.results[0].title,
-                    description: 'Perfect for your movie night',
+                    description: i18n.t("FoodRecDescription"),
                     image: data.results[0].image
                 };
             }
@@ -863,6 +1017,44 @@ const App = {
                <line x1="17" y1="9" x2="23" y2="15"></line>`
             : `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>`;
+    },
+
+    copyEmail() {
+        const email = 'gluglupop2026@gmail.com';
+        
+        // Try modern Clipboard API first
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(email).then(() => {
+                this.showToast(`${email} ${i18n.t("copyemail")}`, 'check');
+            }).catch(err => {
+                console.error('Clipboard error:', err);
+                this.copyEmailFallback(email);
+            });
+        } else {
+            // Fallback for older browsers or non-secure context
+            this.copyEmailFallback(email);
+        }
+    },
+
+    copyEmailFallback(email) {
+        // Create temporary textarea
+        const textarea = document.createElement('textarea');
+        textarea.value = email;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        
+        try {
+            textarea.select();
+            //document.execCommand('copy');
+            this.showToast(`${email} ${i18n.t("copyemail")}`, 'check');
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+            // As last resort, show email to user
+            this.showToast(`Email: ${email}`, 'info');
+        } finally {
+            document.body.removeChild(textarea);
+        }
     },
 
     // ==========================================
@@ -1761,7 +1953,7 @@ const App = {
                         <div class="members-avatars">
                             ${g.members.slice(0, 4).map(m => `<div class="member-avatar">${m.charAt(0).toUpperCase()}</div>`).join('')}
                         </div>
-                        <span class="text-muted text-sm">${g.members.length} ${g.members.length === 1 ? 'membro' : 'membri'}</span>
+                        <span class="text-muted text-sm">${g.members.length} ${g.members.length === 1 ? i18n.t('member') : i18n.t('members')}</span>
                     </div>
                 </div>
             `).join('');
@@ -2329,6 +2521,9 @@ const App = {
 
         // Help
         this.$('helpMenuItem')?.addEventListener('click', () => this.openSheet('helpSheet'));
+
+        // Contact Us - Copy Email
+        this.$('contactUsBtn')?.addEventListener('click', () => this.copyEmail());
 
         // Clear Data
         this.$('clearDataMenuItem')?.addEventListener('click', () => this.confirmClearData());
