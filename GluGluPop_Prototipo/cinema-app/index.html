@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>GluGluPop — Cinema Experience</title>
+    <title>GluGluPop</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +40,6 @@
             
             <!-- Brand Name -->
             <h1 class="splash-brand">GluGluPop</h1>
-            <p class="splash-tagline">Cinema Experience</p>
             
             <!-- Loading Indicator -->
             <div class="splash-loader">
@@ -122,14 +121,13 @@
 
             <!-- Main Content -->
             <div id="homeContent" class="home-content">
-            
                 
                 <!-- Video Card with 3D Effect and Ambient Light -->
                 <div class="video-card-wrapper">
                     <div id="ambientLight" class="ambient-light"></div>
                     <div id="videoCard" class="video-card card-3d">
                         <div id="videoContainer" class="video-container"></div>
-                   
+                    <div class="video-gradient"></div>
                     <div class="video-info">
                         <div class="film-tags">
                             <span id="filmGenre" class="film-tag">-</span>
@@ -188,6 +186,21 @@
                     <div id="filmList" class="film-list"></div>
                 </section>
 
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card glass-card">
+                        <p class="stat-value gradient-text" id="homeStatLiked">0</p>
+                        <p class="stat-label" data-i18n="favorites">Preferiti</p>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <p class="stat-value gradient-text" id="homeStatWatchlist">0</p>
+                        <p class="stat-label" data-i18n="toWatch">Da vedere</p>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <p class="stat-value gradient-text" id="homeStatSwiped">0</p>
+                        <p class="stat-label" data-i18n="rated">Valutati</p>
+                    </div>
+                </div>
             </div>
         </main>
 
@@ -314,6 +327,10 @@
                     <div class="profile-avatar glass-card" id="profileAvatarBtn">
                         <span id="profileInitials">MR</span>
                         <div class="avatar-edit-overlay">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
                         </div>
                     </div>
                     <div class="profile-status online"></div>
@@ -324,8 +341,10 @@
                     <div class="profile-badges">
                         <span class="profile-badge" id="memberBadge">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                                
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
+                            <span data-i18n="memberSince">Membro dal Gennaio 2024</span>
                         </span>
                     </div>
                 </div>
@@ -339,20 +358,31 @@
                 <div class="stat-card glass-card clickable" onclick="App.switchPage('salvati')">
                     <p class="stat-value gradient-text" id="statLiked">0</p>
                     <p class="stat-label" data-i18n="favorites">Preferiti</p>
+                    <div class="stat-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div>
                 </div>
                 <div class="stat-card glass-card clickable" onclick="App.goToWatchlist()">
                     <p class="stat-value gradient-text" id="statWatchlist">0</p>
                     <p class="stat-label" data-i18n="toWatch">Da vedere</p>
+                    <div class="stat-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></div>
                 </div>
                 <div class="stat-card glass-card">
                     <p class="stat-value gradient-text" id="statSwiped">0</p>
                     <p class="stat-label" data-i18n="rated">Valutati</p>
+                    <div class="stat-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line></svg></div>
                 </div>
             </div>
 
-            <br>
+            <!-- Activity Section -->
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" data-i18n="recentActivity">Attività recente</h3>
+                    <button class="btn-text" onclick="App.openSheet('activitySheet')" data-i18n="viewAll">Vedi tutto</button>
+                </div>
+                <div id="recentActivity" class="activity-list"></div>
+            </div>
             
             <!-- Genre Preferences -->
+            <br>
             <div class="card preferences-card glass-card">
                 <div class="preferences-header">
                     <h3 data-i18n="favoriteGenres">I tuoi generi preferiti</h3>
@@ -589,7 +619,7 @@
                     </div>
                 </div>
             </div>
-            <br>
+            
             <!-- Settings -->
             <h3 class="section-title" data-i18n="settings">Impostazioni</h3>
             <div class="settings-list">
@@ -617,9 +647,6 @@
                     <select id="languageSelect" class="select-minimal">
                         <option value="it">🇮🇹 Italiano</option>
                         <option value="en">🇬🇧 English</option>
-                        <option value="es">🇪🇸 Español</option>
-                        <option value="fr">🇫🇷 Français</option>
-                        <option value="de">🇩🇪 Deutsch</option>
                     </select>
                 </div>
 
@@ -653,6 +680,23 @@
                     <div id="notificationsToggle" class="toggle-switch"></div>
                 </div>
 
+                <!-- Autoplay -->
+                <div class="menu-item" id="autoplayMenuItem">
+                    <svg viewBox="0 0 24 24">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    <span class="menu-label" data-i18n="autoplayTrailers">Autoplay trailer</span>
+                    <div id="autoplayToggle" class="toggle-switch active"></div>
+                </div>
+
+                <!-- Adult Content Filter -->
+                <div class="menu-item" id="adultFilterMenuItem">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span class="menu-label" data-i18n="adultFilter">Filtro contenuti adulti</span>
+                    <div id="adultFilterToggle" class="toggle-switch active"></div>
+                </div>
 
                 <!-- Support Section -->
                 <div class="settings-section-header" data-i18n="support">Supporto</div>
@@ -678,6 +722,25 @@
                     <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
 
+                <!-- Feedback -->
+                <div class="menu-item clickable" id="feedbackMenuItem">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span class="menu-label" data-i18n="sendFeedback">Invia feedback</span>
+                    <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+
+                <!-- About -->
+                <div class="menu-item clickable" id="aboutMenuItem">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span class="menu-label" data-i18n="about">Informazioni app</span>
+                    <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
 
                 <!-- Danger Zone -->
                 <div class="settings-section-header danger" data-i18n="dangerZone">Zona pericolosa</div>
@@ -689,6 +752,17 @@
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                     </svg>
                     <span class="menu-label" data-i18n="clearData">Cancella tutti i dati</span>
+                    <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+
+                <!-- Delete Account -->
+                <div class="menu-item clickable danger" id="deleteAccountMenuItem">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                    <span class="menu-label" data-i18n="deleteAccount">Elimina account</span>
                     <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
             </div>
@@ -705,6 +779,18 @@
 
             <div class="app-info">
                 <p class="version-text">GluGluPop v2.0.0</p>
+                <p class="copyright-text">© 2024 GluGluPop. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" title="Twitter">
+                        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                    </a>
+                    <a href="#" class="social-link" title="Instagram">
+                        <svg viewBox="0 0 24 24" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <a href="#" class="social-link" title="GitHub">
+                        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -804,8 +890,11 @@
                         <span data-i18n="all">Tutti</span>
                     </button>
                     <button class="search-filter-btn" data-search-type="catalog">
+                        <svg viewBox="0 0 24 24" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line></svg>
+                        <span data-i18n="catalog">Catalogo</span>
                     </button>
                     <button class="search-filter-btn" data-search-type="favorites">
+                        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                         <span data-i18n="favorites">Preferiti</span>
                     </button>
                     <button class="search-filter-btn" data-search-type="watchlist">
@@ -829,35 +918,35 @@
                     <h4 data-i18n="browseByGenre">Sfoglia per genere</h4>
                     <div class="genre-grid">
                         <button class="genre-btn" data-genre="28">
-                            <span class="genre-emoji">💥</span>
+                            <svg class="genre-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                             <span data-i18n="action">Azione</span>
                         </button>
                         <button class="genre-btn" data-genre="35">
-                            <span class="genre-emoji">😂</span>
+                            <svg class="genre-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
                             <span data-i18n="comedy">Commedia</span>
                         </button>
                         <button class="genre-btn" data-genre="18">
-                            <span class="genre-emoji">🎭</span>
+                            <svg class="genre-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M8 15h8"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
                             <span data-i18n="drama">Drammatico</span>
                         </button>
                         <button class="genre-btn" data-genre="27">
-                            <span class="genre-emoji">👻</span>
+                            <svg class="genre-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path><circle cx="8" cy="10" r="1.5"></circle><circle cx="16" cy="10" r="1.5"></circle><path d="M12 18c2.21 0 4-1.79 4-4H8c0 2.21 1.79 4 4 4z"></path></svg>
                             <span data-i18n="horror">Horror</span>
                         </button>
                         <button class="genre-btn" data-genre="878">
-                            <span class="genre-emoji">🚀</span>
+                            <svg class="genre-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line></svg>
                             <span data-i18n="scifi">Fantascienza</span>
                         </button>
                         <button class="genre-btn" data-genre="10749">
-                            <span class="genre-emoji">💕</span>
+                            <svg class="genre-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                             <span data-i18n="romance">Romance</span>
                         </button>
                         <button class="genre-btn" data-genre="53">
-                            <span class="genre-emoji">🔪</span>
+                            <svg class="genre-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
                             <span data-i18n="thriller">Thriller</span>
                         </button>
                         <button class="genre-btn" data-genre="16">
-                            <span class="genre-emoji">🎨</span>
+                            <svg class="genre-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                             <span data-i18n="animation">Animazione</span>
                         </button>
                     </div>
@@ -953,15 +1042,15 @@
                 
                 <div class="feedback-type-selector">
                     <button class="feedback-type-btn active" data-type="suggestion">
-                        <span class="feedback-emoji">💡</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                         <span data-i18n="suggestion">Suggerimento</span>
                     </button>
                     <button class="feedback-type-btn" data-type="bug">
-                        <span class="feedback-emoji">🐛</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
                         <span data-i18n="bug">Bug</span>
                     </button>
                     <button class="feedback-type-btn" data-type="other">
-                        <span class="feedback-emoji">💬</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                         <span data-i18n="other">Altro</span>
                     </button>
                 </div>
@@ -1047,7 +1136,10 @@
             <div class="sheet-content">
                 <h2 data-i18n="privacy">Privacy e sicurezza</h2>
                 <div class="info-card glass-card">
-                    <h4>🔒 I tuoi dati sono al sicuro</h4>
+                    <div class="info-card-header">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <h4>I tuoi dati sono al sicuro</h4>
+                    </div>
                     <p>Tutti i tuoi dati sono salvati localmente sul tuo dispositivo. Non condividiamo nessuna informazione con terze parti.</p>
                 </div>
                 <div class="settings-list" style="margin-top: 20px;">

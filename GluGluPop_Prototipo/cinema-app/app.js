@@ -491,59 +491,7 @@ const i18n = {
             memberEmail: 'Member email:'
         },
         
-        es: {
-            loading: 'Cargando películas...',
-            error: 'Error de carga',
-            home: 'Inicio',
-            saved: 'Guardados',
-            groups: 'Grupos',
-            profile: 'Perfil',
-            favorites: 'Favoritos',
-            toWatch: 'Por ver',
-            rated: 'Valorados',
-            settings: 'Configuración',
-            language: 'Idioma',
-            darkTheme: 'Tema oscuro',
-            logout: 'Cerrar sesión',
-            save: 'Guardar',
-            cancel: 'Cancelar'
-        },
         
-        fr: {
-            loading: 'Chargement des films...',
-            error: 'Erreur de chargement',
-            home: 'Accueil',
-            saved: 'Sauvegardés',
-            groups: 'Groupes',
-            profile: 'Profil',
-            favorites: 'Favoris',
-            toWatch: 'À voir',
-            rated: 'Notés',
-            settings: 'Paramètres',
-            language: 'Langue',
-            darkTheme: 'Thème sombre',
-            logout: 'Déconnexion',
-            save: 'Sauvegarder',
-            cancel: 'Annuler'
-        },
-        
-        de: {
-            loading: 'Filme werden geladen...',
-            error: 'Ladefehler',
-            home: 'Startseite',
-            saved: 'Gespeichert',
-            groups: 'Gruppen',
-            profile: 'Profil',
-            favorites: 'Favoriten',
-            toWatch: 'Zu sehen',
-            rated: 'Bewertet',
-            settings: 'Einstellungen',
-            language: 'Sprache',
-            darkTheme: 'Dunkles Thema',
-            logout: 'Abmelden',
-            save: 'Speichern',
-            cancel: 'Abbrechen'
-        }
     },
     
     // Get translation
@@ -776,6 +724,7 @@ const App = {
         this.initTheme();
         this.initLanguage();
         this.bindEvents();
+        this.initSearchUI();
         await this.loadFilms();
         this.hideSplash();
     },
@@ -872,6 +821,16 @@ const App = {
         if (this.state.notifications) {
             this.$('notificationsToggle')?.classList.add('active');
         }
+        
+        // Autoplay toggle
+        if (this.state.autoplay) {
+            this.$('autoplayToggle')?.classList.add('active');
+        }
+        
+        // Adult filter toggle
+        if (this.state.adultFilter) {
+            this.$('adultFilterToggle')?.classList.add('active');
+        }
     },
 
     toggleTheme() {
@@ -922,7 +881,7 @@ const App = {
 
     changeLanguage(lang) {
         i18n.setLanguage(lang);
-        this.showToast(i18n.t('languageChanged'), '🌐');
+        this.showToast(i18n.t('languageChanged'), 'globe');
         // Reload films with new language
         this.loadFilms();
     },
@@ -1296,14 +1255,14 @@ const App = {
             const film = await API.getMovieDetails(id);
             if (!this.state.likedFilms.find(f => f.id === id)) {
                 this.state.likedFilms.push(this.simplifyFilm(film));
-                this.showToast(i18n.t('addedToFavorites'), '❤️');
+                this.showToast(i18n.t('addedToFavorites'), 'heart');
                 this.updateStats();
                 this.saveToStorage();
             } else {
-                this.showToast(i18n.t('alreadyInFavorites'), 'ℹ️');
+                this.showToast(i18n.t('alreadyInFavorites'), 'info');
             }
         } catch (e) {
-            this.showToast(i18n.t('error'), '❌');
+            this.showToast(i18n.t('error'), 'error');
         }
         this.closeSheet();
     },
@@ -1313,14 +1272,14 @@ const App = {
             const film = await API.getMovieDetails(id);
             if (!this.state.watchlistFilms.find(f => f.id === id)) {
                 this.state.watchlistFilms.push(this.simplifyFilm(film));
-                this.showToast(i18n.t('addedToWatchlist'), '📑');
+                this.showToast(i18n.t('addedToWatchlist'), 'bookmark');
                 this.updateStats();
                 this.saveToStorage();
             } else {
-                this.showToast(i18n.t('alreadyInWatchlist'), 'ℹ️');
+                this.showToast(i18n.t('alreadyInWatchlist'), 'info');
             }
         } catch (e) {
-            this.showToast(i18n.t('error'), '❌');
+            this.showToast(i18n.t('error'), 'error');
         }
         this.closeSheet();
     },
@@ -1335,7 +1294,7 @@ const App = {
         }
         this.updateStats();
         this.saveToStorage();
-        this.showToast(i18n.t('movieRemoved'), '🗑️');
+        this.showToast(i18n.t('movieRemoved'), 'trash');
     },
 
     // ==========================================
@@ -1545,7 +1504,7 @@ const App = {
             </div>
             <div class="search-results-list">
                 ${results.map(f => `
-                    <div class="search-result-card fade-in" onclick="App.showFilmDetails(${f.id})">
+                    <div class="search-result-card fade-in" data-film-id="${f.id}">
                         <div class="search-result-poster" style="background-image: url('${f.poster || ''}');"></div>
                         <div class="search-result-info">
                             <h3>${this.highlightMatch(f.title, query)}</h3>
@@ -1565,6 +1524,19 @@ const App = {
                 `).join('')}
             </div>
         `;
+        
+        // Add click event listeners to search results
+        container.querySelectorAll('.search-result-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const filmId = parseInt(card.dataset.filmId);
+                if (filmId) {
+                    this.closeSheet();
+                    setTimeout(() => this.showFilmDetails(filmId), 300);
+                }
+            });
+        });
     },
 
     // Highlight matching text
@@ -1628,7 +1600,7 @@ const App = {
         this.state.recentSearches = [];
         Storage.set('recentSearches', []);
         this.renderRecentSearches();
-        this.showToast(i18n.t('cleared'), '✓');
+        this.showToast(i18n.t('cleared'), 'check');
     },
 
     // Search by genre
@@ -1652,6 +1624,12 @@ const App = {
             console.error('Genre search error:', e);
             container.innerHTML = `<p class="search-hint">${i18n.t('error')}</p>`;
         }
+    },
+
+    // Handle click on search result - opens film details with trailer
+    handleSearchResultClick(filmId) {
+        this.closeSheet();
+        setTimeout(() => this.showFilmDetails(filmId), 300);
     },
 
     // Set search type filter
@@ -1733,7 +1711,7 @@ const App = {
         const email = this.$('groupEmailInput').value.trim();
 
         if (!name) {
-            this.showToast(i18n.t('enterName'), '⚠️');
+            this.showToast(i18n.t('enterName'), 'info');
             return;
         }
 
@@ -1758,7 +1736,7 @@ const App = {
         this.renderGroups();
         this.saveToStorage();
         this.updateAchievements();
-        this.showToast(i18n.t('groupCreated'), '🎉');
+        this.showToast(i18n.t('groupCreated'), 'group');
     },
 
     renderGroups() {
@@ -1846,7 +1824,7 @@ const App = {
     async addFilmToGroup(groupIndex, filmId) {
         const group = this.state.groups[groupIndex];
         if (!group || group.films.find(f => f.id === filmId)) {
-            this.showToast(i18n.t('alreadyInGroup'), 'ℹ️');
+            this.showToast(i18n.t('alreadyInGroup'), 'info');
             return;
         }
 
@@ -1855,9 +1833,9 @@ const App = {
             group.films.push(this.simplifyFilm(film));
             this.saveToStorage();
             this.openGroupDetail(groupIndex);
-            this.showToast(i18n.t('movieAddedToGroup'), '🎬');
+            this.showToast(i18n.t('movieAddedToGroup'), 'movie');
         } catch (e) {
-            this.showToast(i18n.t('error'), '❌');
+            this.showToast(i18n.t('error'), 'error');
         }
     },
 
@@ -1867,7 +1845,7 @@ const App = {
             this.state.groups[index].members.push(email.split('@')[0]);
             this.saveToStorage();
             this.openGroupDetail(index);
-            this.showToast(i18n.t('memberInvited'), '📧');
+            this.showToast(i18n.t('memberInvited'), 'mail');
         }
     },
 
@@ -1884,7 +1862,7 @@ const App = {
         this.closeSheet();
         this.renderGroups();
         this.saveToStorage();
-        this.showToast(i18n.t('groupDeleted'), '🗑️');
+        this.showToast(i18n.t('groupDeleted'), 'trash');
     },
 
     // ==========================================
@@ -1936,7 +1914,7 @@ const App = {
         this.updateProfile();
         this.updateProfileAvatar();
         this.closeSheet();
-        this.showToast(i18n.t('profileSaved'), '✓');
+        this.showToast(i18n.t('profileSaved'), 'check');
     },
 
     updateProfileAvatar() {
@@ -1956,21 +1934,21 @@ const App = {
         this.state.notifications = !this.state.notifications;
         Storage.set('notifications', this.state.notifications);
         this.$('notificationsToggle').classList.toggle('active', this.state.notifications);
-        this.showToast(i18n.t('settingsSaved'), '✓');
+        this.showToast(i18n.t('settingsSaved'), 'check');
     },
 
     toggleAutoplay() {
         this.state.autoplay = !this.state.autoplay;
         Storage.set('autoplay', this.state.autoplay);
         this.$('autoplayToggle').classList.toggle('active', this.state.autoplay);
-        this.showToast(i18n.t('settingsSaved'), '✓');
+        this.showToast(i18n.t('settingsSaved'), 'check');
     },
 
     toggleAdultFilter() {
         this.state.adultFilter = !this.state.adultFilter;
         Storage.set('adultFilter', this.state.adultFilter);
         this.$('adultFilterToggle').classList.toggle('active', this.state.adultFilter);
-        this.showToast(i18n.t('settingsSaved'), '✓');
+        this.showToast(i18n.t('settingsSaved'), 'check');
     },
 
     confirmClearData() {
@@ -1991,7 +1969,7 @@ const App = {
         this.updateStats();
         this.renderRecentActivity();
         this.updateAchievements();
-        this.showToast(i18n.t('dataClearedSuccess'), '🗑️');
+        this.showToast(i18n.t('dataClearedSuccess'), 'trash');
     },
 
     confirmDeleteAccount() {
@@ -2010,7 +1988,7 @@ const App = {
                 };
                 this.saveToStorage();
                 this.updateProfile();
-                this.showToast(i18n.t('dataClearedSuccess'), '🗑️');
+                this.showToast(i18n.t('dataClearedSuccess'), 'trash');
             }
         );
     },
@@ -2021,7 +1999,7 @@ const App = {
             i18n.t('logoutMessage'),
             () => {
                 // Simulate logout - in a real app would clear auth tokens
-                this.showToast(i18n.t('logoutSuccess'), '👋');
+                this.showToast(i18n.t('logoutSuccess'), 'logout');
             }
         );
     },
@@ -2031,7 +2009,7 @@ const App = {
         const type = document.querySelector('.feedback-type-btn.active')?.dataset.type || 'suggestion';
         
         if (!message) {
-            this.showToast(i18n.t('enterMessage') || 'Inserisci un messaggio', '⚠️');
+            this.showToast(i18n.t('enterMessage') || 'Inserisci un messaggio', 'info');
             return;
         }
         
@@ -2040,7 +2018,20 @@ const App = {
         
         this.$('feedbackMessage').value = '';
         this.closeSheet();
-        this.showToast(i18n.t('feedbackSent'), '🙏');
+        this.showToast(i18n.t('feedbackSent'), 'thanks');
+    },
+
+    // Initialize toggles state
+    initToggles() {
+        // Autoplay toggle
+        if (this.state.autoplay) {
+            this.$('autoplayToggle')?.classList.add('active');
+        }
+        
+        // Adult filter toggle
+        if (this.state.adultFilter) {
+            this.$('adultFilterToggle')?.classList.add('active');
+        }
     },
 
     // Render recent activity
@@ -2260,12 +2251,31 @@ const App = {
     // ==========================================
     // TOAST
     // ==========================================
-    showToast(msg, icon = '') {
+    showToast(msg, iconType = '') {
         const toast = this.$('toast');
         const textEl = this.$('toastText');
         const iconEl = this.$('toastIcon');
         
-        if (iconEl) iconEl.textContent = icon;
+        // SVG icons for toast
+        const icons = {
+            heart: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>',
+            bookmark: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>',
+            skip: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+            check: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+            info: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+            error: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>',
+            trash: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>',
+            group: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+            movie: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line></svg>',
+            mail: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>',
+            globe: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
+            logout: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>',
+            thanks: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>'
+        };
+        
+        if (iconEl) {
+            iconEl.innerHTML = icons[iconType] || '';
+        }
         if (textEl) textEl.textContent = msg;
         
         toast?.classList.add('show');
@@ -2325,7 +2335,61 @@ const App = {
 
         // Edit Profile
         this.$('editProfileBtn')?.addEventListener('click', () => this.openEditProfile());
+        this.$('editProfileMenuItem')?.addEventListener('click', () => this.openEditProfile());
         this.$('saveProfileBtn')?.addEventListener('click', () => this.saveProfile());
+        this.$('cancelProfileBtn')?.addEventListener('click', () => this.closeSheet());
+        this.$('profileAvatarBtn')?.addEventListener('click', () => this.openEditProfile());
+        
+        // Avatar color buttons
+        this.$$('.color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.$$('.color-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                this.state.profile.avatarColor = btn.dataset.color;
+                this.updateEditAvatarColor();
+            });
+        });
+        
+        // Change avatar color button
+        this.$('changeAvatarColorBtn')?.addEventListener('click', () => {
+            const colors = this.$('avatarColors');
+            if (colors) colors.classList.toggle('hidden');
+        });
+        
+        // Autoplay toggle
+        this.$('autoplayMenuItem')?.addEventListener('click', () => this.toggleAutoplay());
+        
+        // Adult filter toggle
+        this.$('adultFilterMenuItem')?.addEventListener('click', () => this.toggleAdultFilter());
+        
+        // Feedback
+        this.$('feedbackMenuItem')?.addEventListener('click', () => this.openSheet('feedbackSheet'));
+        this.$('sendFeedbackBtn')?.addEventListener('click', () => this.sendFeedback());
+        
+        // Feedback type buttons
+        this.$$('.feedback-type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.$$('.feedback-type-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+        
+        // About
+        this.$('aboutMenuItem')?.addEventListener('click', () => this.openSheet('aboutSheet'));
+        
+        // Delete account
+        this.$('deleteAccountMenuItem')?.addEventListener('click', () => this.confirmDeleteAccount());
+        
+        // Logout
+        this.$('logoutBtn')?.addEventListener('click', () => this.confirmLogout());
+        
+        // Privacy toggles
+        this.$('shareActivityToggle')?.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+        this.$('publicProfileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
 
         // Tabs
         this.$$('.tab-btn').forEach(btn => {
@@ -2357,6 +2421,25 @@ const App = {
         });
 
         this.$('clearSearchBtn')?.addEventListener('click', () => this.clearSearch());
+
+        // Genre buttons in search
+        this.$$('.genre-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const genreId = btn.dataset.genre;
+                if (genreId) this.searchByGenre(genreId);
+            });
+        });
+
+        // Search filter buttons
+        this.$$('.search-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const type = btn.dataset.searchType;
+                if (type) this.setSearchType(type);
+            });
+        });
+
+        // Clear recent searches button
+        this.$('clearRecentSearches')?.addEventListener('click', () => this.clearRecentSearches());
 
         // Saved search
         let savedSearchTimeout;
