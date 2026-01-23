@@ -157,6 +157,8 @@ const i18n = {
             inviteFriend: 'Invita un amico (email)',
             
             // Profile
+            emailPlaceholder:"Your email",
+            namePlaceholder: "Il tuo nome",
             bioPlaceholder: "Racconta qualcosa di te...",
             memberSince: 'Membro dal Gennaio 2024',
             favoriteGenres: 'I tuoi generi preferiti',
@@ -438,6 +440,8 @@ const i18n = {
             inviteFriend: 'Invite a friend (email)',
             
             // Profile
+            emailPlaceholder:"Your email",
+            namePlaceholder: "Your name",
             bioPlaceholder: "Tell us something about you...",
             memberSince: 'Member since January 2024',
             favoriteGenres: 'Your favorite genres',
@@ -515,6 +519,17 @@ const i18n = {
             searchHint: 'Search by title, director or genre',
             noResults: 'No results for',
             
+            // Genres
+            allMovies: 'Tutti',
+            action: 'Action',
+            comedy: 'Comedy',
+            drama: 'Drama',
+            horror: 'Horror',
+            scifi: 'Scifi',
+            romance: 'Romance',
+            thriller: 'Thriller',
+            animation: 'Animation',
+
             // Toasts
             addedToFavorites: 'Added to favorites',
             addedToWatchlist: 'Added to watchlist',
