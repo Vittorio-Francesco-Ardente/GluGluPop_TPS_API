@@ -70,3 +70,9 @@ Scorri trailer a tutto schermo, metti like o passa oltre in un attimo e ricevi s
 ### Cambio Tema
 - Clicca sull'icona **🌙/☀️** in alto a destra
 - Il logo si aggiorna automaticamente in base al tema
+
+### Coming soon
+- Gesione notifiche
+- Gestione sicurezza dati
+- aggiunta dati a database
+- invio feedback in-app
