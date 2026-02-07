@@ -26,20 +26,6 @@ Scorri trailer a tutto schermo, metti like o passa oltre in un attimo e ricevi s
 - **Palette elegante** - Oro (#E5B84C) e Cyan (#3ABDC5)
 - **Font Inter** - Typography professionale
 - **Animazioni fluide** - Transizioni curate nei dettagli
----
-## Struttura Cartelle
-```
-📁 GluGluPop/
-├── 📄 index.html          # Applicazione principale
-├── 📄 README.md           # Questo file
-├── 📁 Logo/
-│   ├── 🖼️ Logo_scuro.jpeg  # Logo per tema scuro
-│   └── 🖼️ Logo_chiaro.jpeg # Logo per tema chiaro
-├── 📁 Video/
-│   └── 🎬 Inception.mp4    # Trailer del film
-└── 📁 Audio/
-    └── 🎵 Inception.mp3    # Audio del trailer
-```
 ## 🎮 Come Usare l'App
 ### Home - Swipe dei Trailer
 1. **Guarda il trailer** che si riproduce automaticamente
